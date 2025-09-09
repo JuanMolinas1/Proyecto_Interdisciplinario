@@ -5,9 +5,9 @@
   - Federico Leonel Bouzon
   - Sofia Marmol
 ## Integrantes:
+  - Cassandra Canzinos
   - Gonzalo Delgado
+  - Santiago Goldfarb
   - Juan Molinas
   - Nehuen Quintanilla
-  - Santiago Goldfarb
-  - Cassandra Canzinos
 ## Proyecto Elegido: `Sistema de Reservas para Hotel`
