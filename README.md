@@ -63,21 +63,20 @@ premium primero).
 #### "Ocupación por temporada" (SQL + código).
 #### "Servicios más demandados" (SQL + código).
 
-�� Entregables
-1. Repositorio GitHub con:
-o Código fuente (src/).
-o Scripts SQL (database/create_tables.sql).
-o Documentación (docs/):
- Enunciado.md (este archivo).
- Diagrama DER (DER.png).
- Manual de usuario (ManualUsuario.md).
+### Entregables
+  1. Repositorio GitHub con:
+    - Código fuente (src/).
+    - Scripts SQL (database/create_tables.sql).
+    - Documentación (docs/):
+    - Enunciado.md (este archivo).
+    - Diagrama DER (DER.png).
+    - Manual de usuario (ManualUsuario.md).
 
-2. Presentación Oral:
-o Demo del sistema (5-10 min).
-o Explicación técnica: cómo se integraron las estructuras y BD.
-3. Carpeta de campo con:
-o Investigaciones.
-o Implementaciones de código.
-o Descripción de lo realizado de forma diaria (Tener en cuenta que
-toda imagen debe tener un alto máximo de media carilla).
-o Formato APA.
+  2. Presentación Oral:
+    - Demo del sistema (5-10 min).
+    - Explicación técnica: cómo se integraron las estructuras y BD.
+  3. Carpeta de campo con:
+    - Investigaciones.
+    - Implementaciones de código.
+    - Descripción de lo realizado de forma diaria (Tener en cuenta que toda imagen debe tener un alto máximo de media carilla).
+    - Formato APA.
