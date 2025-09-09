@@ -60,8 +60,8 @@ premium primero).
   - Registrar reserva (actualizar BD y árbol B+).
   - Buscar habitaciones disponibles (árbol B+ + consulta SQL con fechas).
   - Generar reportes:
-#### "Ocupación por temporada" (SQL + código).
-#### "Servicios más demandados" (SQL + código).
+    - "Ocupación por temporada" (SQL + código).
+    - "Servicios más demandados" (SQL + código).
 
 ### Entregables
   1. Repositorio GitHub con:
