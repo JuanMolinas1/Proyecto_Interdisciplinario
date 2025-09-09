@@ -23,16 +23,16 @@ persistente.
 1. Diseñar una base de datos normalizada (hasta 3FN) con tablas para
 habitaciones, clientes, reservas y servicios.
 2. Implementar estructuras de datos en memoria:
-  - Árbol B+: Para búsqueda rápida de habitaciones disponibles por
+    - Árbol B+: Para búsqueda rápida de habitaciones disponibles por
 fecha y tipo.
-  - Tabla hash: Para acceder a clientes frecuentes por DNI en O(1).
-  - Grafos: Modelar relaciones entre servicios (ej: cliente que reserva
+    - Tabla hash: Para acceder a clientes frecuentes por DNI en O(1).
+    - Grafos: Modelar relaciones entre servicios (ej: cliente que reserva
 habitación + SPA).
-  - Montículo (heap): Priorizar reservas según tipo (ej: suites
+    - Montículo (heap): Priorizar reservas según tipo (ej: suites
 premium primero).
-4. Conectar ambas partes:
-  - Sincronizar datos entre estructuras y BD con operaciones CRUD.
-  - Optimizar consultas SQL con índices y joins.
+3. Conectar ambas partes:
+    - Sincronizar datos entre estructuras y BD con operaciones CRUD.
+    - Optimizar consultas SQL con índices y joins.
 
 ### Requisitos Mínimos
 ### 1. Base de Datos (SQL)
