@@ -2,7 +2,7 @@ create database Hotel;
 use Hotel;
 
 create table Habitaciones(
-ID_habitacion INT NOT NULL primary key,
+ID_habitacion int(3) auto_increment primary key,
 tipo varchar (40),
 precio int (5),
 capacidad int (1),
@@ -10,7 +10,7 @@ estado varchar (70)
  );
  
  create table Reservas(
- ID_reserva int NOT NULL primary key,
+ ID_reserva int(4) auto_increment primary key,
  fecha_entrada date,
  fecha_salida date,
  foreign key (clientes) references clientes,
@@ -18,22 +18,23 @@ estado varchar (70)
  );
  
  create table Servicios(
- ID_servicio INT NOT NULL primary key,
+ ID_servicio int(2) auto_increment primary key,
  nombre varchar (20),
  precio int(10),
  foreign key (reserva) references reservas
  );
  
  create table Clientes(
- ID_cliente INT NOT NULL primary key,
- nombre varchar (30),
- dni INT(8),
- telefono INT(10)
+ ID_cliente int(4) auto_increment primary key,
+ nombre varchar(30),
+ dni int(8),
+ telefono int(10)
  );
  
  create table Historial_Reservas(
- ID_historial INT NOT NULL primary key,
+ ID_historial int(4) auto_increment primary key,
  cliente varchar (40),
  reserva datetime,
  foreign key (reserva) references reserva
  );
+
