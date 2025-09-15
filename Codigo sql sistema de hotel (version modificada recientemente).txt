@@ -1,3 +1,4 @@
+drop database if exists Hotel;
 create database Hotel;
 use Hotel;
 
@@ -64,4 +65,5 @@ create table Registro_Mantenimiento(
 	reserva datetime,
 	foreign key (reserva) references Reserva
 );
+
 
