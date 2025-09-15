@@ -1,0 +1,67 @@
+create database Hotel;
+use Hotel;
+
+create table Habitaciones(
+	id_habitacion INT NOT NULL primary key,
+	tipo varchar (40),
+	precio float (5),
+	capacidad int (1),
+	estado enum ('disponible', 'ocupado'),
+	acepta_mascota bool
+);
+ 
+ create table Reservas(
+	 id_reserva int NOT NULL primary key,
+	 fecha_entrada datetime,
+	 fecha_salida datetime,
+	 foreign key (clientes) references clientes,
+	 foreign key (habitaciones) references habitaciones
+);
+ 
+create table Forma_pago(
+id_pago float (5) auto_increment primary key,
+id_reserva int (1),
+medio_pago enum('efectivo', 'tarjeta','virtual'),
+confirmacion_pago bool
+);
+
+ create table Servicios(
+	 id_servicio INT NOT NULL primary key,
+	 nombre varchar (20),
+	 precio int(10),
+	 foreign key (reserva) references reservas
+);
+ 
+ create table Clientes(
+	 id_cliente INT NOT NULL primary key,
+	 nombre varchar (30),
+	 apellido varchar (35),
+	 dni INT(8),
+	 correo_electronico varchar(30),
+	 telefono INT(10),
+	 mascota bool
+);
+ 
+create table Personal(
+	id_personal int(3) auto_increment primary key,
+	sector varchar(20),
+	horario_entrada datetime,
+	horario_salida datetime,
+	sueldo float
+);
+
+create table Registro_Mantenimiento(
+	id_mantenimiento int (1) auto_increment primary key,
+    id_personal int (3),
+    id_habitacion int (1),
+    tipo_mantenimiento enum ('limpieza','reparacion','refaccion')
+);
+
+
+
+ create table Historial_Reservas(
+    id_historial INT NOT NULL primary key,
+	id_cliente varchar (40),
+	reserva datetime,
+	foreign key (reserva) references Reserva
+);
