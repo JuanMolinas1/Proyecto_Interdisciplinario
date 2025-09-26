@@ -9,7 +9,7 @@ create table Clientes(
     dni int(8),
     gmail varchar(50),
     telefono int(10),
-    vip bool
+    vip bool -- Agregamos de manera precaria
 );
 
 create table Zonas(
@@ -103,3 +103,4 @@ create table Registro_Reservas(
     foreign key(pago) references Pagos(id_pago)
 
 );
+
