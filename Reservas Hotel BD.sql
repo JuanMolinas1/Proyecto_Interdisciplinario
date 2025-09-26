@@ -8,7 +8,8 @@ create table Clientes(
     apellido varchar(35),
     dni int(8),
     gmail varchar(50),
-    telefono int(10)
+    telefono int(10),
+    vip bool
 );
 
 create table Zonas(
@@ -100,4 +101,5 @@ create table Registro_Reservas(
     foreign key(cliente) references Clientes(id_cliente),
     foreign key(reserva) references Reservas(id_reserva),
     foreign key(pago) references Pagos(id_pago)
+
 );
