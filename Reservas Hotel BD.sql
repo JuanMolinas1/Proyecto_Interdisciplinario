@@ -60,7 +60,7 @@ create table Turnos(
 
 create table Servicios(
     id_servicio int(1) auto_increment primary key,
-    tipo enum('Toallas extra', 'Comida ilimitada', 'Masajes'),
+    tipo enum('Toallas extra', 'Comida ilimitada', 'Masajes', 'SPA'),
     precio float(5, 2)
 );
 
@@ -213,8 +213,9 @@ insert into Turnos (empleado, dia, horario_entrada, horario_salida) values
 
 insert into Servicios (tipo, precio) values
 ('Toallas extra', 5.00),
-('Comida ilimitada', 30.00),
-('Masajes', 50.00);
+('Comida ilimitada', 50.00),
+('Masajes', 40.00),
+('SPA', 80.00);
 
 insert into Mantenimientos (empleado_involucrado, habitacion, zona, tipo_mantenimiento) values
 (2, 101, 'A', 'Limpieza'),
@@ -252,17 +253,17 @@ insert into Reservas (habitacion, precio, cant_huespedes, fecha_entrada, fecha_s
 
 insert into Servicios_Reservas (cliente, servicio) values
 (1, 1),
-(2, 2),
+(1, 4),
 (3, 3),
-(4, 1),
+(3, 4),
 (5, 2),
+(5, 3),
 (6, 3),
 (7, 1),
 (8, 2),
 (9, 3),
 (10, 1),
-(11, 2),
-(12, 3),
+(10, 4),
 (13, 1),
 (14, 2),
 (15, 3);
