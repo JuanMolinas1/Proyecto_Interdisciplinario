@@ -1,6 +1,6 @@
-drop database if exists `prueba1`;
-CREATE DATABASE `prueba1` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
-use `prueba1`;
+drop database if exists hotel;
+CREATE DATABASE hotel;
+use hotel;
 
 create table Clientes(
     id_cliente int(4) auto_increment primary key,
