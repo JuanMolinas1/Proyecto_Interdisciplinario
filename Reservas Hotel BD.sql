@@ -60,7 +60,7 @@ create table Turnos(
 
 create table Servicios(
     id_servicio int(1) auto_increment primary key,
-    tipo enum('Toallas extra', 'Comida ilimitada', 'Masajes'),
+    tipo enum('Toallas extra', 'Comida ilimitada', 'Masajes', 'SPA'),
     precio float(5, 2)
 );
 
@@ -103,4 +103,5 @@ create table Registro_Reservas(
     foreign key(pago) references Pagos(id_pago)
 
 );
+
 
