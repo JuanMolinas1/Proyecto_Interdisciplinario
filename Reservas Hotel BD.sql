@@ -1,5 +1,5 @@
 drop database if exists hotel;
-CREATE DATABASE hotel;
+create database hotel;
 use hotel;
 
 create table Clientes(
@@ -288,5 +288,6 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
 
 
