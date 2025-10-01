@@ -43,7 +43,7 @@ create table Pagos(
 
 create table Empleados(
     id_empleado int(3) auto_increment primary key,
-    sector varchar(20),
+    sector enum('Limpieza', 'Recepcion', 'Cocina', 'Mantenimiento', 'Seguridad'),
     nombre varchar(35),
     gmail varchar(35),
     sueldo float(6, 2)
@@ -77,12 +77,14 @@ create table Mantenimientos(
  
 create table Reservas(
     id_reserva int(4) auto_increment primary key,
+    recepcionista int(4),
     habitacion int(3),
     precio float(9, 2),
     cant_huespedes int(1),
     fecha_entrada datetime,
     fecha_salida datetime,
-    foreign key(habitacion) references Habitaciones(id_habitacion)
+    foreign key(habitacion) references Habitaciones(id_habitacion),
+    foreign key(recepcionista) references Empleados(id_empleado)
 );
  
 create table Servicios_Reservas(
@@ -180,7 +182,7 @@ insert into Pagos (forma_pago, estado_pago) values
 insert into Empleados (sector, nombre, gmail, sueldo) values
 ('Recepcion', 'Luis Ramirez', 'luis.ramirez@gmail.com', 2500.50),
 ('Mantenimiento', 'Carmen Diaz', 'carmen.diaz@gmail.com', 2200.00),
-('Limpieza', 'Ana Torres', 'ana.torres@gmail.com', 2000.00),
+('Cocina', 'Ana Torres', 'ana.torres@gmail.com', 2000.00),
 ('Seguridad', 'Jorge Salinas', 'jorge.salinas@gmail.com', 2300.00),
 ('Recepcion', 'Paula Moreno', 'paula.moreno@gmail.com', 2600.75),
 ('Mantenimiento', 'Miguel Soto', 'miguel.soto@gmail.com', 2150.00),
@@ -189,7 +191,7 @@ insert into Empleados (sector, nombre, gmail, sueldo) values
 ('Recepcion', 'Maria Lopez', 'maria.lopez@gmail.com', 2550.50),
 ('Mantenimiento', 'Ricardo Flores', 'ricardo.flores@gmail.com', 2250.00),
 ('Limpieza', 'Laura Mendoza', 'laura.mendoza@gmail.com', 2050.00),
-('Seguridad', 'Diego Gutierrez', 'diego.gutierrez@gmail.com', 2400.00),
+('Cocina', 'Diego Gutierrez', 'diego.gutierrez@gmail.com', 2400.00),
 ('Recepcion', 'Clara Alvarez', 'clara.alvarez@gmail.com', 2580.00),
 ('Mantenimiento', 'Rosa Fernandez', 'rosa.fernandez@gmail.com', 2200.00),
 ('Limpieza', 'Jose Ramirez', 'jose.ramirez@gmail.com', 2000.00);
@@ -234,22 +236,22 @@ insert into Mantenimientos (empleado_involucrado, habitacion, zona, tipo_manteni
 (3, 14, 'B', 'Limpieza'),
 (6, 15, 'C', 'Desratización');
 
-insert into Reservas (habitacion, precio, cant_huespedes, fecha_entrada, fecha_salida) values
-(1, 500.00, 2, '2025-11-01 14:00:00', '2025-11-05 12:00:00'),
-(2, 450.00, 1, '2025-11-02 15:00:00', '2025-11-06 11:00:00'),
-(3, 300.00, 2, '2025-11-03 14:00:00', '2025-11-07 12:00:00'),
-(4, 280.00, 1, '2025-11-04 16:00:00', '2025-11-08 11:00:00'),
-(5, 700.00, 3, '2025-11-05 14:00:00', '2025-11-10 12:00:00'),
-(6, 600.00, 2, '2025-11-06 15:00:00', '2025-11-11 11:00:00'),
-(7, 250.00, 1, '2025-11-07 14:00:00', '2025-11-09 12:00:00'),
-(8, 200.00, 1, '2025-11-08 13:00:00', '2025-11-10 11:00:00'),
-(9, 550.00, 2, '2025-11-09 14:00:00', '2025-11-13 12:00:00'),
-(10, 300.00, 2, '2025-11-10 15:00:00', '2025-11-14 11:00:00'),
-(11, 650.00, 3, '2025-11-11 14:00:00', '2025-11-15 12:00:00'),
-(12, 210.00, 1, '2025-11-12 16:00:00', '2025-11-16 11:00:00'),
-(13, 480.00, 2, '2025-11-13 14:00:00', '2025-11-17 12:00:00'),
-(14, 320.00, 2, '2025-11-14 15:00:00', '2025-11-18 11:00:00'),
-(15, 700.00, 3, '2025-11-15 14:00:00', '2025-11-19 12:00:00');
+insert into Reservas (habitacion, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida) values
+(1, 1, 500.00, 2, '2025-11-01 14:00:00', '2025-11-05 12:00:00'),
+(2, 9, 450.00, 1, '2025-11-02 15:00:00', '2025-11-06 11:00:00'),
+(3, 13, 300.00, 2, '2025-11-03 14:00:00', '2025-11-07 12:00:00'),
+(4, 5, 280.00, 1, '2025-11-04 16:00:00', '2025-11-08 11:00:00'),
+(5, 5, 700.00, 3, '2025-11-05 14:00:00', '2025-11-10 12:00:00'),
+(6, 5, 600.00, 2, '2025-11-06 15:00:00', '2025-11-11 11:00:00'),
+(7, 1, 250.00, 1, '2025-11-07 14:00:00', '2025-11-09 12:00:00'),
+(8, 9, 200.00, 1, '2025-11-08 13:00:00', '2025-11-10 11:00:00'),
+(9, 13, 550.00, 2, '2025-11-09 14:00:00', '2025-11-13 12:00:00'),
+(10, 13, 300.00, 2, '2025-11-10 15:00:00', '2025-11-14 11:00:00'),
+(11, 5, 650.00, 3, '2025-11-11 14:00:00', '2025-11-15 12:00:00'),
+(12, 1, 210.00, 1, '2025-11-12 16:00:00', '2025-11-16 11:00:00'),
+(13, 9, 480.00, 2, '2025-11-13 14:00:00', '2025-11-17 12:00:00'),
+(14, 9, 320.00, 2, '2025-11-14 15:00:00', '2025-11-18 11:00:00'),
+(15, 9, 700.00, 3, '2025-11-15 14:00:00', '2025-11-19 12:00:00');
 
 insert into Servicios_Reservas (cliente, servicio) values
 (1, 1),
@@ -284,3 +286,4 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
