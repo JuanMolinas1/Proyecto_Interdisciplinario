@@ -1,4 +1,3 @@
-
 SELECT nombre AS recepcionista, descripcion AS turno
 FROM Recepcionistas 
 INNER JOIN Turnos  ON turno = id_turno;
@@ -21,4 +20,4 @@ SELECT nombre AS recepcionista, descripcion AS turno
 FROM Recepcionistas
 INNER JOIN Turnos ON turno =  id_turno
 
-
+ -- La tabla recepcionista no existe, existe la tabla empleados y en emplados pueden ser de diferentes tipos, entre ellos recepcionista.
