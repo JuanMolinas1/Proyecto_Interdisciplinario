@@ -5,7 +5,7 @@
   - Federico Leonel Bouzon
   - Sofia Marmol
 ## Integrantes:
-  - Cassandra Canzinos
+  - Cardozo Pablo
   - Gonzalo Delgado
   - Santiago Goldfarb
   - Juan Molinas
