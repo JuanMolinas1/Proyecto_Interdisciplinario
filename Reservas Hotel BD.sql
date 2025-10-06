@@ -165,21 +165,21 @@ insert into Ascensores (estado_ascensor, peso_soportado, zona_hotel) values
 ('En Funcionamiento', 220, 'C');
 
 insert into Pagos (forma_pago, estado_pago) values
-('Efectivo', 1),
-('Tarjeta', 0),
-('Crypto', 1),
-('Vacas', 0),
-('Efectivo', 1),
-('Tarjeta', 1),
-('Crypto', 0),
-('Vacas', 1),
-('Efectivo', 0),
-('Tarjeta', 1),
-('Crypto', 1),
-('Vacas', 0),
-('Efectivo', 1),
-('Tarjeta', 0),
-('Crypto', 1);
+('Efectivo', TRUE),
+('Tarjeta', FALSE),
+('Crypto', TRUE),
+('Vacas', FALSE),
+('Efectivo', TRUE),
+('Tarjeta', TRUE),
+('Crypto', FALSE),
+('Vacas', TRUE),
+('Efectivo', FALSE),
+('Tarjeta', TRUE),
+('Crypto', TRUE),
+('Vacas', FALSE),
+('Efectivo', TRUE),
+('Tarjeta', FALSE),
+('Crypto', TRUE);
 
 insert into Empleados (sector, nombre, gmail, sueldo) values
 ('Recepcion', 'Luis Ramirez', 'luis.ramirez@gmail.com', 2500.50),
@@ -288,5 +288,6 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
 
 
