@@ -90,7 +90,7 @@ create table Reservas(
 );
  
 create table Servicios_Reservas(
-    id_historial_serv int(1) auto_increment primary key,
+    id_historial_servicio int(1) auto_increment primary key,
     cliente int(4),
     servicio int(1),
     foreign key(cliente) references Clientes(id_cliente),
@@ -288,3 +288,4 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
