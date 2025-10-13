@@ -53,8 +53,8 @@ create table Turnos(
     id_turno int(4) auto_increment primary key,
     empleado int(3),
     dia enum('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'),
-    horario_entrada datetime,
-    horario_salida datetime,
+    horario_entrada time,
+    horario_salida time,
     foreign key(empleado) references Empleados(id_empleado)
 );
 
@@ -199,21 +199,21 @@ insert into Empleados (sector, nombre, gmail, sueldo) values
 ('Limpieza', 'Jose Ramirez', 'jose.ramirez@gmail.com', 2000.00);
 
 insert into Turnos (empleado, dia, horario_entrada, horario_salida) values
-(1, 'Lunes', '2025-10-06 08:00:00', '2025-10-06 16:00:00'),
-(2, 'Martes', '2025-10-07 09:00:00', '2025-10-07 17:00:00'),
-(3, 'Miércoles', '2025-10-08 08:30:00', '2025-10-08 16:30:00'),
-(4, 'Jueves', '2025-10-09 10:00:00', '2025-10-09 18:00:00'),
-(5, 'Viernes', '2025-10-10 07:00:00', '2025-10-10 15:00:00'),
-(6, 'Sábado', '2025-10-11 08:00:00', '2025-10-11 16:00:00'),
-(7, 'Domingo', '2025-10-12 09:00:00', '2025-10-12 17:00:00'),
-(8, 'Lunes', '2025-10-13 08:00:00', '2025-10-13 16:00:00'),
-(9, 'Martes', '2025-10-14 09:00:00', '2025-10-14 17:00:00'),
-(10, 'Miércoles', '2025-10-15 08:30:00', '2025-10-15 16:30:00'),
-(11, 'Jueves', '2025-10-16 10:00:00', '2025-10-16 18:00:00'),
-(12, 'Viernes', '2025-10-17 07:00:00', '2025-10-17 15:00:00'),
-(13, 'Sábado', '2025-10-18 08:00:00', '2025-10-18 16:00:00'),
-(14, 'Domingo', '2025-10-19 09:00:00', '2025-10-19 17:00:00'),
-(15, 'Lunes', '2025-10-20 08:00:00', '2025-10-20 16:00:00');
+(1, 'Lunes', '08:00:00', '16:00:00'),
+(2, 'Martes', '09:00:00', '17:00:00'),
+(3, 'Miércoles', '08:30:00', '16:30:00'),
+(4, 'Jueves', '10:00:00', '18:00:00'),
+(5, 'Viernes', '07:00:00', '15:00:00'),
+(6, 'Sábado', '08:00:00', '16:00:00'),
+(7, 'Domingo', '09:00:00', '17:00:00'),
+(8, 'Lunes', '08:00:00', '16:00:00'),
+(9, 'Martes', '09:00:00', '17:00:00'),
+(10, 'Miércoles', '08:30:00', '16:30:00'),
+(11, 'Jueves', '10:00:00', '18:00:00'),
+(12, 'Viernes', '07:00:00', '15:00:00'),
+(13, 'Sábado', '08:00:00', '16:00:00'),
+(14, 'Domingo', '09:00:00', '17:00:00'),
+(15, 'Lunes', '08:00:00', '16:00:00');
 
 insert into Servicios (tipo, precio) values
 ('Toallas extra', 5.00),
@@ -255,7 +255,7 @@ insert into Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes
 (14, 14, 9, 320.00, 2, '2024-09-14 15:00:00', '2025-09-18 11:00:00'),
 (15, 15, 9, 700.00, 3, '2024-10-15 14:00:00', '2025-10-19 12:00:00');
 
-insert into Servicios_Reservas (cliente, servicio) values
+insert into Servicios_Reservas (reserva, servicio) values
 (1, 1),
 (1, 4),
 (3, 3),
@@ -288,6 +288,7 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
 
 
 
