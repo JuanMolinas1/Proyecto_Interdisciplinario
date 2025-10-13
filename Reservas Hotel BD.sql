@@ -50,7 +50,7 @@ create table Empleados(
 );
 
 create table Turnos(
-    id_turno int(1) auto_increment primary key,
+    id_turno int(4) auto_increment primary key,
     empleado int(3),
     dia enum('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'),
     horario_entrada datetime,
@@ -80,7 +80,7 @@ create table Reservas(
     habitacion int(3),
     cliente int(4),
     recepcionista int(4),
-    precio float(9, 2),
+    precio float(6, 2),
     cant_huespedes int(1),
     fecha_entrada datetime,
     fecha_salida datetime,
@@ -90,7 +90,7 @@ create table Reservas(
 );
  
 create table Servicios_Reservas(
-    id_historial_servicio int(1) auto_increment primary key,
+    id_historial_servicio int(4) auto_increment primary key,
     cliente int(4),
     servicio int(1),
     foreign key(cliente) references Clientes(id_cliente),
@@ -98,7 +98,7 @@ create table Servicios_Reservas(
 );
 
 create table Registro_Reservas(
-    id_registro_reserva int(1) auto_increment primary key,
+    id_registro_reserva int(4) auto_increment primary key,
     cliente int(4),
     reserva int(4),
     pago int(4),
@@ -288,6 +288,7 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
 
 
 
