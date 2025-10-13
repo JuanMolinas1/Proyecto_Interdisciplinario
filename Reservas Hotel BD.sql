@@ -199,10 +199,10 @@ insert into Empleados (sector, nombre, gmail, sueldo) values
 ('Limpieza', 'Jose Ramirez', 'jose.ramirez@gmail.com', 2000.00);
 
 insert into Turnos (empleado, dia, horario_entrada, horario_salida) values
-(1, 'Lunes', '08:00:00', '16:00:00'),
+(1, 'Lunes', '10:00:00', '18:00:00'),
 (2, 'Martes', '09:00:00', '17:00:00'),
 (3, 'Miércoles', '08:30:00', '16:30:00'),
-(4, 'Jueves', '10:00:00', '18:00:00'),
+(4, 'Jueves', '08:00:00', '16:00:00'),
 (5, 'Viernes', '07:00:00', '15:00:00'),
 (6, 'Sábado', '08:00:00', '16:00:00'),
 (7, 'Domingo', '09:00:00', '17:00:00'),
@@ -288,6 +288,7 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (15, 15, 15);
+
 
 
 
