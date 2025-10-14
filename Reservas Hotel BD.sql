@@ -253,7 +253,7 @@ insert into Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes
 (12, 4, 1, 210.00, 1, '2024-07-12 16:00:00', '2024-07-15 11:00:00'),
 (13, 13, 9, 480.00, 2, '2024-02-13 14:00:00', '2024-02-16 12:00:00'),
 (14, 14, 9, 320.00, 2, '2024-09-14 15:00:00', '2024-09-17 11:00:00'),
-(15, 15, 9, 700.00, 3, '2024-10-15 14:00:00', '2024-10-18 12:00:00');
+(15, 4, 9, 700.00, 3, '2024-10-15 14:00:00', '2024-10-18 12:00:00');
 
 insert into Servicios_Reservas (reserva, servicio) values
 (1, 1),
@@ -287,7 +287,4 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (4, 12, 12),
 (13, 13, 13),
 (14, 14, 14),
-(15, 15, 15);
-
-set lc_time_names = 'es_ES';
-
+(4, 15, 15);
