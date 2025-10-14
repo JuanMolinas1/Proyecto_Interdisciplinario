@@ -1,3 +1,4 @@
+-- Ingresos mensuales por servicios adicionales.
 set lc_time_names = 'es_ES';
 
 select monthname(Reservas.fecha_entrada) as mes, sum(Servicios.precio) as dinero_mes
