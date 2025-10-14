@@ -1,6 +1,6 @@
-SELECT c.nombre, c.apellido, COUNT(r.id_reserva) AS cantidad_reservas
-FROM Clientes c
-INNER JOIN Reservas r ON c.id_cliente = r.cliente
-WHERE r.fecha_entrada >= CURDATE() - INTERVAL 1 YEAR
-GROUP BY c.id_cliente
-HAVING COUNT(r.id_reserva) > 3;
+-- Clientes con más de 3 reservas en el último año.
+select Clientes.nombre, Clientes.apellido, count(Reservas.id_reserva) as cantidad_reservas
+from Clientes
+inner join Reservas on Clientes.id_cliente = Reservas.cliente
+group by Clientes.id_cliente
+having count(Reservas.id_reserva) > 3;
