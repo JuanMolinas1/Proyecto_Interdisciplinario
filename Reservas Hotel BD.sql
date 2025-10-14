@@ -288,5 +288,3 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (4, 15, 15);
-
-
