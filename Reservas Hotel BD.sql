@@ -290,12 +290,3 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (15, 15, 15);
 
 set lc_time_names = 'es_ES';
-
-
-
-
-
-
-
-
-
