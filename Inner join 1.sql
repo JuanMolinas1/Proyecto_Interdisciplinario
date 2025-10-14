@@ -1,3 +1,4 @@
+--Habitaciones disponibles en un rango de fechas.
 SELECT
     H.numero AS 'Numero_Habitacion',
     H.tipo AS 'Tipo',
