@@ -132,20 +132,20 @@ insert into Zonas (id_zona, nombre_zona) values
 
 insert into Habitaciones (numero, zona, estado, tipo, capacidad) values
 (101, 'A', 'Disponible', 'Presidencial', 3),
-(102, 'A', 'Ocupada', 'Suite', 2),
-(103, 'B', 'Limpiando', 'Standard', 2),
-(104, 'B', 'Disponible', 'Standard', 1),
-(105, 'C', 'Ocupada', 'Presidencial', 4),
+(102, 'C', 'Ocupada', 'Suite', 2),
+(103, 'D', 'Limpiando', 'Standard', 2),
+(104, 'D', 'Disponible', 'Standard', 1),
+(105, 'A', 'Ocupada', 'Presidencial', 4),
 (106, 'C', 'Disponible', 'Suite', 2),
 (107, 'D', 'Limpiando', 'Standard', 1),
 (108, 'D', 'Disponible', 'Standard', 1),
-(109, 'A', 'Ocupada', 'Suite', 3),
-(110, 'B', 'Disponible', 'Standard', 2),
-(111, 'C', 'Limpiando', 'Presidencial', 4),
+(109, 'C', 'Ocupada', 'Suite', 3),
+(110, 'D', 'Disponible', 'Standard', 2),
+(111, 'A', 'Limpiando', 'Presidencial', 4),
 (112, 'D', 'Disponible', 'Standard', 1),
-(113, 'A', 'Ocupada', 'Suite', 2),
-(114, 'B', 'Disponible', 'Standard', 2),
-(115, 'C', 'Disponible', 'Presidencial', 3);
+(113, 'C', 'Ocupada', 'Suite', 2),
+(114, 'D', 'Disponible', 'Standard', 2),
+(115, 'A', 'Disponible', 'Presidencial', 3);
 
 insert into Ascensores (estado_ascensor, peso_soportado, zona_hotel) values
 ('En Funcionamiento', 220, 'A'),
@@ -288,3 +288,4 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (4, 15, 15);
+
