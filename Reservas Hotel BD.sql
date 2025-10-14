@@ -257,7 +257,6 @@ insert into Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes
 
 insert into Servicios_Reservas (reserva, servicio) values
 (1, 1),
-(1, 4),
 (3, 3),
 (3, 4),
 (5, 2),
@@ -268,6 +267,7 @@ insert into Servicios_Reservas (reserva, servicio) values
 (9, 3),
 (10, 1),
 (10, 4),
+(11, 4),
 (13, 1),
 (14, 2),
 (15, 3);
@@ -288,3 +288,36 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (13, 13, 13),
 (14, 14, 14),
 (4, 15, 15);
+
+
+-- Habitaciones disponibles en un rango de fechas.
+select Habitaciones.numero as 'Numero_Habitacion', Habitaciones.tipo as 'Tipo', Habitaciones.capacidad as 'Capacidad_Max', Habitaciones.zona as 'Zona'
+from Habitaciones
+where Habitaciones.id_habitacion not in (
+        select Reservas.habitacion
+        from Reservas
+        where Reservas.fecha_entrada < '2025-07-03 14:00:00' and Reservas.fecha_salida > '2025-08-03 14:00:00'
+)
+and Habitaciones.estado = 'Disponible'
+order by Habitaciones.numero;
+
+
+-- Clientes con más de 3 reservas en el último año.
+select Clientes.nombre, Clientes.apellido, count(Reservas.id_reserva) as cantidad_reservas
+from Clientes
+inner join Reservas on Clientes.id_cliente = Reservas.cliente
+group by Clientes.id_cliente
+having count(Reservas.id_reserva) > 3;
+
+
+-- Ingresos mensuales por servicios adicionales.
+set lc_time_names = 'es_ES';
+
+select monthname(Reservas.fecha_entrada) as mes, sum(Servicios.precio) as dinero_mes
+from Reservas
+inner join Servicios_Reservas on Reservas.id_reserva = Servicios_Reservas.reserva
+inner join Servicios on Servicios.id_servicio = Servicios_Reservas.servicio
+where year(Reservas.fecha_entrada) = 2024
+group by month(Reservas.fecha_entrada)
+order by month(Reservas.fecha_entrada)
+limit 12;
