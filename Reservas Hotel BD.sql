@@ -296,7 +296,7 @@ from Habitaciones
 where Habitaciones.id_habitacion not in (
         select Reservas.habitacion
         from Reservas
-        where Reservas.fecha_entrada > '2025-07-03 01:00:00' and Reservas.fecha_salida < '2025-08-03 23:00:00'
+        where Reservas.fecha_entrada > '2024-01-01 01:00:00' and Reservas.fecha_salida < '2024-02-01 23:00:00'
 )
 and Habitaciones.estado = 'Disponible'
 order by Habitaciones.numero;
@@ -321,4 +321,3 @@ where year(Reservas.fecha_entrada) = 2024
 group by month(Reservas.fecha_entrada)
 order by month(Reservas.fecha_entrada)
 limit 12;
-
