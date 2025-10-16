@@ -321,4 +321,3 @@ where year(Reservas.fecha_entrada) = 2024
 group by month(Reservas.fecha_entrada)
 order by month(Reservas.fecha_entrada)
 limit 12;
-
