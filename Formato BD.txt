@@ -1,0 +1,2 @@
+*Nombre de la Conexión:* Conexion Reservas de Hotel
+Hostname:
