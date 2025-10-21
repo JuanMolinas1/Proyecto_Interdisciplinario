@@ -295,7 +295,7 @@ from Habitaciones
 where Habitaciones.id_habitacion not in (
 		select Reservas.habitacion
 		from Reservas
-		where Reservas.fecha_entrada > '2024-01-01 01:00:00' and Reservas.fecha_salida < '2024-02-01 23:00:00'
+		where Reservas.fecha_entrada > '2024-01-01' and Reservas.fecha_salida < '2024-02-01'
 )
 and Habitaciones.estado = 'Disponible'
 order by Habitaciones.numero;
@@ -332,3 +332,4 @@ inner join Registro_Reservas on Clientes.id_Cliente = Registro_Reservas.cliente
 where Clientes.vip = TRUE
 group by Clientes.id_cliente, Clientes.nombre
 having count(Registro_Reservas.id_registro_reserva) > 2;
+
