@@ -111,7 +111,7 @@ insert into Clientes (nombre, apellido, dni, gmail, telefono, vip) values
 ('Juan', 'Perez', 12345678, 'juan.perez@gmail.com', 1234567890, TRUE),
 ('Ana', 'Lopez', 23456789, 'ana.lopez@gmail.com', 2345678901, FALSE),
 ('Carlos', 'Gomez', 34567890, 'carlos.gomez@gmail.com', 3456789012, TRUE),
-('Lucia', 'Fernandez', 45678901, 'lucia.fernandez@gmail.com', 4567890123, FALSE),
+('Lucia', 'Fernandez', 45678901, 'lucia.fernandez@gmail.com', 4567890123, TRUE),
 ('Sofia', 'Martinez', 56789012, 'sofia.martinez@gmail.com', 5678901234, FALSE),
 ('Pedro', 'Ramirez', 67890123, 'pedro.ramirez@gmail.com', 6789012345, TRUE),
 ('Marta', 'Sanchez', 78901234, 'marta.sanchez@gmail.com', 7890123456, FALSE),
@@ -289,6 +289,46 @@ insert into Registro_Reservas (cliente, reserva, pago) values
 (14, 14, 14),
 (4, 15, 15);
 
-call Habitaciones_Disponibles();
-call Clientes_Habituales();
-call Servicio_Mes();
+-- Habitaciones disponibles en un rango de fechas
+select Habitaciones.numero as 'Numero_Habitacion', Habitaciones.tipo as 'Tipo', Habitaciones.capacidad as 'Capacidad_Max', Habitaciones.zona as 'Zona'
+from Habitaciones
+where Habitaciones.id_habitacion not in (
+		select Reservas.habitacion
+		from Reservas
+		where Reservas.fecha_entrada > '2024-01-01 01:00:00' and Reservas.fecha_salida < '2024-02-01 23:00:00'
+)
+and Habitaciones.estado = 'Disponible'
+order by Habitaciones.numero;
+
+-- Clientes que reservaron mas de 3 veces
+select Clientes.nombre as Nombre, Clientes.apellido as Apellido, count(Reservas.id_reserva) as Cantidad_reservas
+from Clientes
+inner join Reservas on Clientes.id_cliente = Reservas.cliente
+group by Clientes.id_cliente
+having count(Reservas.id_reserva) > 3;
+
+-- Dinero ganado al mes por servicios extra
+set lc_time_names = 'es_ES';
+
+select monthname(Reservas.fecha_entrada) as Meses, sum(Servicios.precio) as Dinero_mes
+from Reservas
+inner join Servicios_Reservas on Reservas.id_reserva = Servicios_Reservas.reserva
+inner join Servicios on Servicios.id_servicio = Servicios_Reservas.servicio
+where year(Reservas.fecha_entrada) = 2024
+group by month(Reservas.fecha_entrada)
+order by month(Reservas.fecha_entrada)
+limit 12;
+
+-- Empleados mayores de 60 años y horario de salida anterior a las 5pm
+select Empleados.nombre as Nombre_Empleado, Empleados.sueldo as Sueldo_Empleado
+from Empleados
+inner join Turnos on Empleados.id_empleado = Turnos.empleado
+where Empleados.sueldo > 2000 and Turnos.horario_salida < '17:00:00';
+
+-- Clientes VIP que hayan hecho mas de 2 reservas
+select Clientes.nombre as Nombre_Cliente, count(Registro_Reservas.id_registro_reserva) as Cantidad_Reservas
+from Clientes
+inner join Registro_Reservas on Clientes.id_Cliente = Registro_Reservas.cliente
+where Clientes.vip = TRUE
+group by Clientes.id_cliente, Clientes.nombre
+having count(Registro_Reservas.id_registro_reserva) > 2;
