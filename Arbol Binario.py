@@ -1,9 +1,10 @@
 import mysql.connector
-from datetime import date
 from mysql.connector import errorcode
+import datetime
+from datetime import date
 
 cursor = None
-cnx = Nonejuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangay
+cnx = None
 
 def Conectar_SQL():
     global cnx, cursor
@@ -16,28 +17,30 @@ def Conectar_SQL():
     cursor = cnx.cursor(dictionary = True)
     print("Conexión establecida")
 
+Conectar_SQL()
+
 def InnerJoin_Fechas():
-    Tabla_Fechas = 'select Reservas.fecha_entrada ' \
+    tabla = 'select Reservas.fecha_entrada ' \
     'from Reservas ' \
     'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
     'order by Reservas.fecha_entrada asc;'
-    cursor.execute(Tabla_Fechas)
+    cursor.execute(tabla)
     return cursor.fetchall()
 
 def InnerJoin_Tipos():
-    Tabla_Tipos = 'select Habitaciones.tipo ' \
+    tabla = 'select Habitaciones.tipo ' \
     'from Reservas ' \
     'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
     'order by Reservas.fecha_entrada asc;'
-    cursor.execute(Tabla_Tipos)
+    cursor.execute(tabla)
     return cursor.fetchall()
 
 def InnerJoin_Completo():
-    Tabla_Tipos = 'select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada ' \
+    tabla = 'select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada ' \
     'from Reservas ' \
     'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
     'order by Reservas.fecha_entrada asc;'
-    cursor.execute(Tabla_Tipos)
+    cursor.execute(tabla)
     return cursor.fetchall()
 
 def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
@@ -54,8 +57,18 @@ def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
             fin = medio - 1
     return -1
 
-def Consultar_Fecha
+def Consultar_Fecha():
+    while True:
+        try: 
+            print("Buscador de Fechas: ")
+            año = int(input("Ingrese el año: "))
+            mes = int(input("Ingrese el mes: "))
+            dia = int(input("Ingrese el día: "))
+            fecha_busqueda = datetime.date(año, mes, dia)
+            break
+        except ValueError:
+            print("Por favor ingrese una fecha valida")
+    return fecha_busqueda
 
 Tabla_Fecha = InnerJoin_Fechas()
-
-Conectar_SQL()
+print(Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha()))
