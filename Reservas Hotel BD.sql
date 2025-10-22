@@ -321,3 +321,14 @@ inner join Registro_Reservas on Clientes.id_Cliente = Registro_Reservas.cliente
 where Clientes.vip = TRUE
 group by Clientes.id_cliente, Clientes.nombre
 having count(Registro_Reservas.id_registro_reserva) > 2;
+
+-- Empleados que trabajen en el sector de Limpieza y salgan antes de las 11
+select Empleados.id_empleado
+from Empleados 
+inner join Turnos on Empleados.id_empleado = Turnos.empleado 
+where Empleado.sector = 'Limpieza' and Turnos.horario_salida < '11:00:00'; 
+
+-- Empleados del sector de Limpieza que cobren mas de 2000
+select nombre, sector, sueldo
+from Empleados
+where sector = "Limpieza" and sueldo > 2000
