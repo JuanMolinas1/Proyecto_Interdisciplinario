@@ -39,4 +39,23 @@ def InnerJoin_Completo():
     'order by Reservas.fecha_entrada asc;'
     cursor.execute(Tabla_Tipos)
     return cursor.fetchall()
+
+def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
+    inicio = 0
+    fin = len(Tabla_Fecha) - 1
+    while inicio <= fin:
+        medio = (inicio + fin) // 2
+        fecha_medio = Tabla_Fecha[medio]['fecha_entrada']
+        if fecha_medio == fecha_busqueda:
+            return medio
+        elif fecha_medio < fecha_busqueda:
+            inicio = medio + 1
+        else:
+            fin = medio - 1
+    return -1
+
+def Consultar_Fecha
+
+Tabla_Fecha = InnerJoin_Fechas()
+
 Conectar_SQL()
