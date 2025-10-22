@@ -50,12 +50,12 @@ def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
         medio = (inicio + fin) // 2
         fecha_medio = Tabla_Fecha[medio]['fecha_entrada']
         if fecha_medio == fecha_busqueda:
-            return medio
+            return True
         elif fecha_medio < fecha_busqueda:
             inicio = medio + 1
         else:
             fin = medio - 1
-    return -1
+    return False
 
 def Consultar_Fecha():
     while True:
