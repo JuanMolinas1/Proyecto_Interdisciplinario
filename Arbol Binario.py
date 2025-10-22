@@ -50,7 +50,7 @@ def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
         medio = (inicio + fin) // 2
         fecha_medio = Tabla_Fecha[medio]['fecha_entrada']
         if fecha_medio == fecha_busqueda:
-            return True
+            return medio
         elif fecha_medio < fecha_busqueda:
             inicio = medio + 1
         else:
@@ -69,6 +69,16 @@ def Consultar_Fecha():
         except ValueError:
             print("Por favor ingrese una fecha valida")
     return fecha_busqueda
+
+def Comparar_Tipo(Tabla_Tipo):
+    True
+
+def Consultar_Tipo():
+    while True:
+        try:
+            print()
+        except ValueError:
+            print()
 
 Tabla_Fecha = InnerJoin_Fechas()
 Tabla_Tipo = InnerJoin_Tipos()
