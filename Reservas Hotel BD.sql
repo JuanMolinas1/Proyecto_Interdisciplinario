@@ -30,7 +30,7 @@ create table Habitaciones(
 create table Ascensores(
     id_ascensor int(1) auto_increment primary key,
     estado_ascensor enum('En Funcionamiento', 'En Mantenimiento'),
-    peso_soportado int(4) default(220),
+    peso_soportado int(4) default 220,
     zona_hotel enum('A', 'B', 'C', 'D'),
     foreign key(zona_hotel) references Zonas(id_zona)
 );
@@ -148,10 +148,10 @@ insert into Habitaciones (numero, zona, estado, tipo, capacidad) values
 (115, 'A', 'Disponible', 'Presidencial', 3);
 
 insert into Ascensores (estado_ascensor, peso_soportado, zona_hotel) values
-('En Funcionamiento', 220, 'A'),
-('En Mantenimiento', 220, 'B'),
-('En Funcionamiento', 220, 'C'),
-('En Funcionamiento', 220, 'D');
+('En Funcionamiento', default, 'A'),
+('En Mantenimiento', default, 'B'),
+('En Funcionamiento', 350, 'C'),
+('En Funcionamiento', 300, 'D');
 
 insert into Pagos (forma_pago, estado_pago) values
 ('Efectivo', TRUE),
