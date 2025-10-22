@@ -151,18 +151,7 @@ insert into Ascensores (estado_ascensor, peso_soportado, zona_hotel) values
 ('En Funcionamiento', 220, 'A'),
 ('En Mantenimiento', 220, 'B'),
 ('En Funcionamiento', 220, 'C'),
-('En Funcionamiento', 220, 'D'),
-('En Funcionamiento', 220, 'A'),
-('En Funcionamiento', 220, 'B'),
-('En Mantenimiento', 220, 'C'),
-('En Funcionamiento', 220, 'D'),
-('En Funcionamiento', 220, 'A'),
-('En Funcionamiento', 220, 'B'),
-('En Funcionamiento', 220, 'C'),
-('En Funcionamiento', 220, 'D'),
-('En Mantenimiento', 220, 'A'),
-('En Funcionamiento', 220, 'B'),
-('En Funcionamiento', 220, 'C');
+('En Funcionamiento', 220, 'D');
 
 insert into Pagos (forma_pago, estado_pago) values
 ('Efectivo', TRUE),
@@ -332,4 +321,3 @@ inner join Registro_Reservas on Clientes.id_Cliente = Registro_Reservas.cliente
 where Clientes.vip = TRUE
 group by Clientes.id_cliente, Clientes.nombre
 having count(Registro_Reservas.id_registro_reserva) > 2;
-
