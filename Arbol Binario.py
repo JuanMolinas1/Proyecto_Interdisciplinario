@@ -76,7 +76,7 @@ def Comparar_Tipo(Tabla_Tipo):
 def Consultar_Tipo():
     while True:
         try:
-            print()
+            print("Busqueda de tipo")
         except ValueError:
             print()
 
