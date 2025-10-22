@@ -35,7 +35,7 @@ def InnerJoin_Tipos():
     cursor.execute(tabla)
     return cursor.fetchall()
 
-def InnerJoin_Completo():
+def InnerJoin_Reservas():
     tabla = 'select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada ' \
     'from Reservas ' \
     'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
@@ -71,4 +71,11 @@ def Consultar_Fecha():
     return fecha_busqueda
 
 Tabla_Fecha = InnerJoin_Fechas()
-print(Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha()))
+Tabla_Tipo = InnerJoin_Tipos()
+Tabla_Reservas = InnerJoin_Reservas()
+
+fecha_existe = Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha)
+if fecha_existe == True:
+    True
+else:
+    False
