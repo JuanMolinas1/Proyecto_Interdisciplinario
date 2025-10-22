@@ -3,7 +3,7 @@ from datetime import date
 from mysql.connector import errorcode
 
 cursor = None
-cnx = None
+cnx = Nonejuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangayjuangay
 
 def Conectar_SQL():
     global cnx, cursor
