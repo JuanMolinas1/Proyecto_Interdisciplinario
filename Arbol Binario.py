@@ -31,6 +31,12 @@ def InnerJoin_Tipos():
     'order by Reservas.fecha_entrada asc;'
     cursor.execute(Tabla_Tipos)
     return cursor.fetchall()
+
+def InnerJoin_Completo():
+    Tabla_Tipos = 'select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada ' \
+    'from Reservas ' \
+    'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
+    'order by Reservas.fecha_entrada asc;'
+    cursor.execute(Tabla_Tipos)
+    return cursor.fetchall()
 Conectar_SQL()
-print(InnerJoin_Fechas())
-print(InnerJoin_Tipos())
