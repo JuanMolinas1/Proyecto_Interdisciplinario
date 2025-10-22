@@ -20,7 +20,7 @@ create table Zonas(
 create table Habitaciones(
     id_habitacion int(3) auto_increment primary key,
     numero int(3),
-    zona enum('A', 'B', 'C', 'D'),
+    zona enum('A', 'C', 'D'),
     estado enum('Disponible', 'Limpiando', 'Ocupada'),
     tipo enum('Presidencial','Suite','Standard'),
     capacidad int(1),
