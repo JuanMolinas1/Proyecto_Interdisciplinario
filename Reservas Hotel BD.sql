@@ -326,7 +326,7 @@ having count(Registro_Reservas.id_registro_reserva) > 2;
 select Empleados.id_empleado
 from Empleados 
 inner join Turnos on Empleados.id_empleado = Turnos.empleado 
-where Empleado.sector = 'Limpieza' and Turnos.horario_salida < '11:00:00'; 
+where Empleados.sector = 'Limpieza' and Turnos.horario_salida < '11:00:00'; 
 
 -- Empleados del sector de Limpieza que cobren mas de 2000
 select nombre, sector, sueldo
