@@ -62,7 +62,7 @@ def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
 def Consultar_Fecha():
     while True:
         try: 
-            print("Buscador de Fechas")
+            print("\nBuscador de Fechas")
             año = int(input("Ingrese el año: "))
             mes = int(input("Ingrese el mes: "))
             dia = int(input("Ingrese el día: "))
@@ -81,12 +81,13 @@ def Comparar_Tipo(Tabla_Tipo, medio, tipo):
 def Consultar_Tipo():
     while True:
         try:
-            print("Busqueda de tipo")
-            tipo = str(input("Ingrese el tipo de habitación buscado: ")).capitalize()
-            if tipo != "Standard" or tipo != "Deluxe" or tipo != "Presidencial":
-                print("Ingrese un tipo de habitación valido")
-            else:
+            print("\nBusqueda de tipo")
+            t = str(input("Ingrese el tipo de habitación buscado: "))
+            tipo = t.capitalize()
+            if tipo == "Standard" or tipo == "Deluxe" or tipo == "Presidencial":
                 return tipo
+            else:
+                print("Ingrese un tipo de habitación valido")
         except ValueError:
             print("Por favor ingrese un texto válido")
 
@@ -100,7 +101,7 @@ except TypeError:
     encontro = False
 
 if encontro == True:
-    comparacion = (Tabla_Tipo, medio, Consultar_Tipo())
+    comparacion = Comparar_Tipo(Tabla_Tipo, medio, Consultar_Tipo())
 else:
     comparacion = False
 
