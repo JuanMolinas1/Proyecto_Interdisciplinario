@@ -72,8 +72,11 @@ def Consultar_Fecha():
             print("Por favor ingrese una fecha valida")
     return fecha_busqueda
 
-def Comparar_Tipo(Tabla_Tipo, medio):
-    True
+def Comparar_Tipo(Tabla_Tipo, medio, tipo):
+    if Tabla_Tipo[medio]["tipo"] == tipo:
+        return True
+    else:
+        return False
 
 def Consultar_Tipo():
     while True:
@@ -96,9 +99,12 @@ try:
 except TypeError:
     encontro = False
 
-
-
 if encontro == True:
+    comparacion = (Tabla_Tipo, medio, Consultar_Tipo())
+else:
+    comparacion = False
+
+if comparacion == True:
     print("\n-- Reserva Encontrada --")
     for llave, valor in Tabla_Reservas[medio].items():
         print(f"{llave.capitalize()}: {valor}")
