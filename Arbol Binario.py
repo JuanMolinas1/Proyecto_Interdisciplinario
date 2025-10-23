@@ -52,7 +52,7 @@ def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
         medio = (inicio + fin) // 2
         fecha_medio = Tabla_Fecha[medio]['fecha_entrada']
         if fecha_medio == fecha_busqueda:
-            return medio
+            return True, medio
         elif fecha_medio < fecha_busqueda:
             inicio = medio + 1
         else:
@@ -79,6 +79,9 @@ def Consultar_Tipo():
     while True:
         try:
             print("Busqueda de tipo")
+            tipo = str(input("Ingrese el tipo de habitación buscado: ")).capitalize()
+            if tipo != "Standard" or tipo != "Deluxe" or tipo != "Presidencial":
+                print("Ingrese un tipo de habitación valido")
         except ValueError:
             print()
 
@@ -86,8 +89,14 @@ Tabla_Fecha = InnerJoin_Fechas()
 Tabla_Tipo = InnerJoin_Tipos()
 Tabla_Reservas = InnerJoin_Reservas()
 
-fecha_existe = Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha)
-if fecha_existe == True:
-    True
+try:   
+    encontro, medio = Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha())
+except TypeError:
+    encontro = False
+
+if encontro == True:
+    print("\n-- Reserva Encontrada --")
+    for llave, valor in Tabla_Reservas[medio].items():
+        print(f"{llave.capitalize()}: {valor}")
 else:
     False
