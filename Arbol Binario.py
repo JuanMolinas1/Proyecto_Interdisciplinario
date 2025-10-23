@@ -3,6 +3,8 @@ from mysql.connector import errorcode
 import datetime
 from datetime import date
 
+#python -m pip install mysql-connector
+
 cursor = None
 cnx = None
 
