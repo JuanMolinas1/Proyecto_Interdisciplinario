@@ -332,3 +332,11 @@ where Empleados.sector = 'Limpieza' and Turnos.horario_salida < '11:00:00';
 select nombre, sector, sueldo
 from Empleados
 where sector = "Limpieza" and sueldo > 2000
+
+-- Que ascensores pertenecen a la zona "A"
+select zona_hotel
+from Ascensores
+where zona_hotel = 'A'
+
+
+
