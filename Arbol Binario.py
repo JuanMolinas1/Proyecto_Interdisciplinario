@@ -91,9 +91,17 @@ def Consultar_Tipo():
         except ValueError:
             print("Por favor ingrese un texto válido")
 
-Tabla_Fecha = InnerJoin_Fechas()
-Tabla_Tipo = InnerJoin_Tipos()
-Tabla_Reservas = InnerJoin_Reservas()
+Tabla_Fecha = []
+Tabla_Tipo = []
+Tabla_Reservas = []
+
+def Crear_Arbol_Binario():
+    global Tabla_Fecha, Tabla_Tipo, Tabla_Reservas
+    Tabla_Fecha = InnerJoin_Fechas()
+    Tabla_Tipo = InnerJoin_Tipos()
+    Tabla_Reservas = InnerJoin_Reservas()
+
+Crear_Arbol_Binario()
 
 try:   
     encontro, medio = Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha())
