@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import datetime
 from datetime import date
+import heapq
 
 #python -m pip install mysql-connector
 
@@ -36,3 +37,14 @@ Monticulo = InnerJoin(
     'inner join Habitaciones on Reservas. habitacion = Habitaciones.id_habitacion;' \
     )
 
+heap = [
+    (
+        -int(c["vip"]),
+        -int(c["habitacion"].lower() == "presidencial"),
+        -int(c["habitacion"].lower() == "suite"),
+        -c["precio"],
+        c["id_cliente"]),
+        c
+    )
+    for c in Clientes
+]
