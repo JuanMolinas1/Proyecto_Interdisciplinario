@@ -21,8 +21,8 @@ def Conectar_SQL():
 
 Conectar_SQL()
 
-def InnerJoin(Consulta):
-    cursor.execute(Consulta)
+def InnerJoin(consulta):
+    cursor.execute(consulta)
     return cursor.fetchall()
 
 def Busqueda_Binaria(Tabla_Fecha, fecha_busqueda):
@@ -77,18 +77,24 @@ Tabla_Reservas = []
 
 def Crear_Arbol_Binario():
     global Tabla_Fecha, Tabla_Tipo, Tabla_Reservas
-    Tabla_Fecha = InnerJoin('select Reservas.fecha_entrada ' \
-    'from Reservas ' \
-    'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
-    'order by Reservas.fecha_entrada asc;')
-    Tabla_Tipo = InnerJoin('select Habitaciones.tipo ' \
-    'from Reservas ' \
-    'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
-    'order by Reservas.fecha_entrada asc;')
-    Tabla_Reservas = InnerJoin('select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada ' \
-    'from Reservas ' \
-    'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
-    'order by Reservas.fecha_entrada asc;')
+    Tabla_Fecha = InnerJoin(
+        'select Reservas.fecha_entrada ' \
+        'from Reservas ' \
+        'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
+        'order by Reservas.fecha_entrada asc;'
+        )
+    Tabla_Tipo = InnerJoin(
+        'select Habitaciones.tipo ' \
+        'from Reservas ' \
+        'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
+        'order by Reservas.fecha_entrada asc;'
+        )
+    Tabla_Reservas = InnerJoin(
+        'select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada ' \
+        'from Reservas ' \
+        'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion ' \
+        'order by Reservas.fecha_entrada asc;'
+        )
 
 Crear_Arbol_Binario()
 
