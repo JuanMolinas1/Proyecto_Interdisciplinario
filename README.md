@@ -9,7 +9,7 @@
   - Gonzalo Delgado
   - Santiago Goldfarb
   - Juan Molinas
-  - Nehuen Quintanilla
+    
 ## Proyecto Elegido: `Sistema de Reservas para Hotel`
 
 ## Consiga:
