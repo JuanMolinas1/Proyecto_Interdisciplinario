@@ -66,7 +66,7 @@ def Consultar_Fecha():
             año = int(input("Ingrese el año: "))
             mes = int(input("Ingrese el mes: "))
             dia = int(input("Ingrese el día: "))
-            fecha_busqueda = datetime.date(año, mes, dia)
+            fecha_busqueda = datetime.date(20, mes, dia)
             break
         except ValueError:
             print("Por favor ingrese una fecha valida")
@@ -103,7 +103,7 @@ def Crear_Arbol_Binario():
 
 Crear_Arbol_Binario()
 
-try:   
+try:
     encontro, medio = Busqueda_Binaria(Tabla_Fecha, Consultar_Fecha())
 except TypeError:
     encontro = False
