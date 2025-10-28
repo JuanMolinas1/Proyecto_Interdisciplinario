@@ -323,18 +323,19 @@ group by Clientes.id_cliente, Clientes.nombre
 having count(Registro_Reservas.id_registro_reserva) > 2;
 
 -- Empleados que trabajen en el sector de Limpieza y salgan antes de las 11
-select Empleados.id_empleado
+select Empleados.id_empleado as Identificador, Empleados.nombre as Nombre, Empleados.sector as Sector, Turnos.horario_salida as Horario_Salida
 from Empleados 
 inner join Turnos on Empleados.id_empleado = Turnos.empleado 
 where Empleados.sector = 'Limpieza' and Turnos.horario_salida < '11:00:00'; 
 
 -- Empleados del sector de Limpieza que cobren mas de 2000
-select nombre, sector, sueldo
+select nombre as Nombre, sector as Sector, sueldo as Sueldo
 from Empleados
-where sector = "Limpieza" and sueldo > 2000
+where sector = "Limpieza" and sueldo > 2000;
 
 -- Habitaciones Deluxe de la zona A que hayan sido reservadas al menos una vez (En proceso)
-select Habitaciones.id_habitacion as Identificador
-
-
-
+select Habitaciones.id_habitacion as Identificador, Habitaciones.tipo as Tipo_Habitacion, Habitaciones.zona as Zona, count(Reservas.id_reserva) as Veces_Reservada
+from Habitaciones
+inner join Reservas on Habitaciones.id_habitacion = Reservas.habitacion
+where Habitaciones.tipo = "Deluxe" and Habitaciones.zona = "A"
+group by Habitaciones.id_habitacion, Habitaciones.tipo, Habitaciones.zona;
