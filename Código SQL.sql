@@ -33,14 +33,14 @@ create table Piezas (
 create table Revisiones (
 	id_revision int(1) auto_increment primary key,
     tecnico int(4),
-    coche int(4),
+    vehiculo int(4),
     problema varchar(50),
     fecha date,
     costo int(6),
     bateria int(3),
     tipo_servicio enum("Preventivo", "Correctivo"),
     foreign key (tecnico) references Tecnicos(id_tecnico),
-    foreign key (coche) references Vehiculos(id_vehiculo)
+    foreign key (vehiculo) references Vehiculos(id_vehiculo)
 );
 
 create table Piezas_Revision (
@@ -79,12 +79,12 @@ insert into Piezas (nombre, precio, cantidad) values
     ("Botón", 57, 7),
     ("Maquina de vapor", 67, 67);
     
-insert into Revisiones (tecnico, coche, problema, fecha, costo, bateria, tipo_servicio) values
+insert into Revisiones (tecnico, vehiculo, problema, fecha, costo, bateria, tipo_servicio) values
 	(1, 1, "No prende", "2024-03-02", 100, 80, "Preventivo"),
     (3, 2, "No carga", "2024-12-12", 200, 80, "Correctivo"),
     (4, 3, "Hace mucho ruido", "2024-11-11", 300, 80, "Preventivo"),
     (2, 4, "Se maneja solo", "2012-10-10", 301, 80, "Preventivo"),
-    (5, 5, "Hola", "2018-06-07", 67, 80, "Correctivo");
+    (5, 5, "Hola", "2018-06-07", 67, 79, "Correctivo");
     
 insert into Piezas_Revision (pieza, revision) values
 	(1, 4),
@@ -92,3 +92,43 @@ insert into Piezas_Revision (pieza, revision) values
     (3, 2),
     (4, 4),
     (5, 1);
+    
+select V.tipo, V.organizacion, R.tecnico
+from Vehiculos V
+inner join Revisiones R on V.id_vehiculo = R.vehiculo;
+
+select id_revision, costo
+from Revisiones
+where costo > (
+	select avg(costo)
+    from Revisiones
+);
+
+select tipo_servicio, avg(costo)
+from Revisiones
+group by tipo_servicio;
+
+-- No funciona
+-- select tecnico, count(id_revision) as Cantidad_Revisiones
+-- from Revisiones
+-- where Cantidad_Revisiones > 3;
+
+select vehiculo, count(id_revision) as Cantidad_revisiones
+from Revisiones
+group by vehiculo
+order by Cantidad_revisiones asc
+limit 1;
+
+select V.organizacion, R.bateria
+from Vehiculos V
+inner join Revisiones R on V.id_vehiculo = R.vehiculo
+where bateria < (
+	select avg(bateria)
+    from Revisiones
+);
+
+select tecnico, count(id_revision) as Revisioness
+from Revisiones
+group by tecnico
+order by Revisioness desc
+limit 3;
