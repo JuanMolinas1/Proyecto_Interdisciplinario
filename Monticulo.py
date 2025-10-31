@@ -28,8 +28,6 @@ def InnerJoin(consulta):
 
 Monticulo = []
 
-print(Monticulo)
-
 Monticulo = InnerJoin(
     'select Clientes.id_cliente, Clientes.nombre, Clientes.vip, Habitaciones.tipo as habitacion, Reservas.precio ' \
     'from Clientes ' \
@@ -43,8 +41,18 @@ heap = [
         -int(c["habitacion"].lower() == "presidencial"),
         -int(c["habitacion"].lower() == "suite"),
         -c["precio"],
-        c["id_cliente"]),
+        c["id_cliente"],
         c
     )
-    for c in Clientes
+    for c in Monticulo
 ]
+
+heapq.heapify(heap)
+
+if heap:
+    _, _, _, _, _, cliente_top = heapq.heappop(heap)
+    print("\n-- Reserva con mayor prioridad --")
+    for llave, valor in cliente_top.items():
+        print(f"{llave.capitalize()}: {valor}")
+else:
+    print("No hay clientes")
