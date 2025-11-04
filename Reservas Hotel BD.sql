@@ -3,12 +3,12 @@ create database hotel;
 use hotel;
 
 create table Clientes(
-    id_cliente int(4) auto_increment primary key,
+    id_cliente int auto_increment primary key,
     nombre varchar(30),
     apellido varchar(35),
-    dni int(8),
+    dni int,
     gmail varchar(50),
-    telefono bigint(10),
+    telefono bigint,
     vip bool
 );
 
@@ -18,40 +18,40 @@ create table Zonas(
 );
 
 create table Habitaciones(
-    id_habitacion int(3) auto_increment primary key,
-    numero int(3),
+    id_habitacion int auto_increment primary key,
+    numero int,
     zona enum('A', 'C', 'D'),
     estado enum('Disponible', 'Limpiando', 'Ocupada'),
     tipo enum('Presidencial','Suite','Standard'),
-    capacidad int(1),
+    capacidad int,
     foreign key(zona) references Zonas(id_zona)
 );
 
 create table Ascensores(
-    id_ascensor int(1) auto_increment primary key,
+    id_ascensor int auto_increment primary key,
     estado_ascensor enum('En Funcionamiento', 'En Mantenimiento'),
-    peso_soportado int(4) default 220,
+    peso_soportado int default 220,
     zona_hotel enum('A', 'B', 'C', 'D'),
     foreign key(zona_hotel) references Zonas(id_zona)
 );
 
 create table Pagos(
-    id_pago int(4) auto_increment primary key,
+    id_pago int auto_increment primary key,
     forma_pago enum('Efectivo', 'Tarjeta', 'Crypto', 'Vacas'),
     estado_pago bool
 );
 
 create table Empleados(
-    id_empleado int(3) auto_increment primary key,
+    id_empleado int auto_increment primary key,
     sector enum('Limpieza', 'Recepcion', 'Cocina', 'Mantenimiento', 'Seguridad'),
     nombre varchar(35),
     gmail varchar(35),
-    sueldo float(6, 2)
+    sueldo float
 );
 
 create table Turnos(
-    id_turno int(4) auto_increment primary key,
-    empleado int(3),
+    id_turno int auto_increment primary key,
+    empleado int,
     dia enum('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'),
     horario_entrada time,
     horario_salida time,
@@ -59,15 +59,15 @@ create table Turnos(
 );
 
 create table Servicios(
-    id_servicio int(1) auto_increment primary key,
+    id_servicio int auto_increment primary key,
     tipo enum('Toallas extra', 'Comida ilimitada', 'Masajes', 'SPA'),
-    precio float(5, 2)
+    precio float
 );
 
 create table Mantenimientos(
-    id_mantenimiento int(4) auto_increment primary key,
-    empleado_involucrado int(3),
-    habitacion int(3),
+    id_mantenimiento int auto_increment primary key,
+    empleado_involucrado int,
+    habitacion int,
     zona enum('A', 'B', 'C', 'D'),
     tipo_mantenimiento enum('Limpieza', 'Reparación', 'Desratización'),
     foreign key(empleado_involucrado) references Empleados(id_empleado),
@@ -76,12 +76,12 @@ create table Mantenimientos(
 );
  
 create table Reservas(
-    id_reserva int(4) auto_increment primary key,
-    habitacion int(3),
-    cliente int(4),
-    recepcionista int(4),
-    precio float(6, 2),
-    cant_huespedes int(1),
+    id_reserva int auto_increment primary key,
+    habitacion int,
+    cliente int,
+    recepcionista int,
+    precio float,
+    cant_huespedes int,
     fecha_entrada date,
     fecha_salida date,
     foreign key(habitacion) references Habitaciones(id_habitacion),
@@ -90,18 +90,18 @@ create table Reservas(
 );
  
 create table Servicios_Reservas(
-    id_servicio_reserva int(4) auto_increment primary key,
-    reserva int(4),
-    servicio int(1),
+    id_servicio_reserva int auto_increment primary key,
+    reserva int,
+    servicio int,
     foreign key(reserva) references Reservas(id_reserva),
     foreign key(servicio) references Servicios(id_servicio)
 );
 
 create table Registro_Reservas(
-    id_registro_reserva int(4) auto_increment primary key,
-    cliente int(4),
-    reserva int(4),
-    pago int(4),
+    id_registro_reserva int auto_increment primary key,
+    cliente int,
+    reserva int,
+    pago int,
     foreign key(cliente) references Clientes(id_cliente),
     foreign key(reserva) references Reservas(id_reserva),
     foreign key(pago) references Pagos(id_pago)
@@ -299,7 +299,7 @@ having count(Reservas.id_reserva) > 3;
 -- Dinero ganado al mes por servicios extra
 set lc_time_names = 'es_ES';
 
-select monthname(Reservas.fecha_entrada) as Meses, sum(Servicios.precio) as Dinero_mes
+select month(Reservas.fecha_entrada) as Mes, sum(Servicios.precio) as Dinero_mes
 from Reservas
 inner join Servicios_Reservas on Reservas.id_reserva = Servicios_Reservas.reserva
 inner join Servicios on Servicios.id_servicio = Servicios_Reservas.servicio
