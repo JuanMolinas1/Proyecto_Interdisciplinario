@@ -4,7 +4,7 @@ from mysql.connector import errorcode
 import datetime
 from datetime import date
 import heapq
-
+import json
 
 # Variables Globales
 # Para la conexion SQL
@@ -197,9 +197,9 @@ def Busqueda():
     if encontro:
         tipo = Consultar_Tipo()
         if Tabla_Tipo[medio]["tipo"] == tipo:
-            print("\n-- Reserva Encontrada --")
-            for llave, valor in Tabla_Reservas[medio].items():
-                print(f"{llave.capitalize()}: {valor}")
+            Tabla_Encontrada = []
+            Tabla_Encontrada.append(Tabla_Reservas[medio])
+            Imprimir_Tabla(Tabla_Encontrada, "Reserva Encontrada")
         else:
             print("No se encontró una reserva con ese tipo.")
     else:
@@ -221,7 +221,10 @@ def Mostrar_Grafos():
 def Mostrar_Monticulo():
     if heap:
         _, _, _, _, _, cliente_top = heapq.heappop(heap)
-        Imprimir_Tabla(Monticulo, "Cliente con Mayor Prioridad (Montículo)")
+        print("\n-- Reserva con mayor prioridad --")
+        Monticulo_Top = []
+        Monticulo_Top.append(cliente_top)
+        Imprimir_Tabla(Monticulo_Top, "Cliente con Mayor Prioridad (Montículo)")
     else:
         print("No hay clientes")
 
