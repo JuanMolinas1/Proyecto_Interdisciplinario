@@ -136,7 +136,7 @@ def Crear_Tablas():
 # Impresion de Tablas con formato
 def Imprimir_Tabla(tabla, titulo):
     if not tabla:
-        print(f"{titulo} vacía")
+        print(f"{titulo} N/a")
         return
     encabezados = list(tabla[0].keys())
     ancho_columnas = []
