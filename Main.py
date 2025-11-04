@@ -17,6 +17,7 @@ Tabla_Tipo = []
 Tabla_Reservas = []
 Tabla_sinHash = []
 Tabla_Hash = []
+Grafos = []
 Monticulo = []
 heap = []
 
@@ -50,7 +51,7 @@ def InnerJoin(consulta):
 
 # Crear las tablas usando las consultas de antes
 def Crear_Tablas():
-    global Tabla_Fecha, Tabla_Tipo, Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Monticulo, heap
+    global Tabla_Fecha, Tabla_Tipo, Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap
 
     # Tablas de búsqueda binaria
     Tabla_Fecha = InnerJoin(
@@ -89,6 +90,22 @@ def Crear_Tablas():
     for fila in Tabla_sinHash:
         fila_hash = {llave: hash(valor) % cant_registros for llave, valor in fila.items()}
         Tabla_Hash.append(fila_hash)
+
+    Grafos = InnerJoin(
+        "select " \
+        "Clientes.id_cliente as Id_Cliente, " \
+        "Clientes.nombre as Nombre_Cliente, " 
+        "Reservas.id_reserva as Id_Reserva, " 
+        "Habitaciones.id_habitacion as Id_Habitacion, " \
+        "Habitaciones.zona as Zona, " \
+        "Servicios.tipo as Servicio " \
+        "from Clientes " \
+        "left join Reservas on Clientes.id_cliente = Reservas.cliente " \
+        "left join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion " \
+        "left join Servicios_Reservas on Reservas.id_reserva = Servicios_Reservas.reserva " \
+        "left join Servicios on Servicios_Reservas.servicio = Servicios.id_servicio " \
+        "order by Id_Cliente asc; " \
+    )
 
 
     # Montículo
@@ -195,13 +212,16 @@ def Mostrar_Hash():
     Imprimir_Tabla(Tabla_Hash, "Tabla Hash")
 
 
+#Punto 2.3 Grafos para Clientes con Reservas y Servicios
+def Mostrar_Grafos():
+    Imprimir_Tabla(Grafos, "Grafos")
+
+
 # Punto 2.4 Montículo para Reserva con mayor prioridad
 def Mostrar_Monticulo():
     if heap:
         _, _, _, _, _, cliente_top = heapq.heappop(heap)
-        print("\n-- Reserva con mayor prioridad --")
-        for llave, valor in cliente_top.items():
-            print(f"{llave.capitalize()}: {valor}")
+        Imprimir_Tabla(Monticulo, "Cliente con Mayor Prioridad (Montículo)")
     else:
         print("No hay clientes")
 
@@ -213,6 +233,7 @@ def main():
 
     Busqueda()
     Mostrar_Hash()
+    Mostrar_Grafos()
     Mostrar_Monticulo()
 
 main()
