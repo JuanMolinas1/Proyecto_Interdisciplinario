@@ -5,11 +5,10 @@
   - Federico Leonel Bouzon
   - Sofia Marmol
 ## Integrantes:
-  - Cardozo Pablo
+  - Pablo Cardozo
   - Gonzalo Delgado
   - Santiago Goldfarb
   - Juan Molinas
-  - Nehuen Quintanilla
 ## Proyecto Elegido: `Sistema de Reservas para Hotel`
 
 ## Consiga:
