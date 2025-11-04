@@ -40,31 +40,25 @@ Registro_Servicio_Demandado = InnerJoin(
 
 Ocupacion_Temporada = InnerJoin(
     "select " \
-	"year(fecha_entrada) AS año, " \
+	"year(fecha_entrada) AS Temporada, " \
     "case " \
-		"when month(fecha_entrada) between 1 and 3 then 'Temporada 1 (Enero - Marzo)' " \
-		"when month(fecha_entrada) between 4 and 6 then 'Temporada 2 (Abril - Junio)' " \
-		"when month(fecha_entrada) between 7 and 9 then 'Temporada 3 (Julio - Septiembre)' " \
-		"when month(fecha_entrada) between 10 and 12 then 'Temporada 4 (Octubre - Diciembre)' " \
-	"end AS Temporada, " \
+		"when month(fecha_entrada) between 1 and 3 then 'Parte 1 (Enero - Marzo)' " \
+		"when month(fecha_entrada) between 4 and 6 then 'Parte 2 (Abril - Junio)' " \
+		"when month(fecha_entrada) between 7 and 9 then 'Parte 3 (Julio - Septiembre)' " \
+		"when month(fecha_entrada) between 10 and 12 then 'Parte 4 (Octubre - Diciembre)' " \
+	"end AS Parte, " \
 	"count(*) as Cantidad_Reservas " \
     "from Reservas " \
-    "group by Año, Temporada " \
-    "order BY Año, temporada; " \
-     
+    "group by Temporada, Parte " \
+    "order BY Temporada, Parte; " \
 )
 
 nombre_archivo = "Servicio Mas Demandado.json"
 
-with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
-   json.dump(Registro_Servicio_Demandado, archivo, indent=4, ensure_ascii=False)
+def Nombre_archivo(diccionario, nombre_archivo):
+    with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
+        json.dump(diccionario, archivo, indent=4, ensure_ascii=False)
+    print(f"El Reporte '{nombre_archivo}' fue creado con éxito")
 
-
-print(f"El Reporte '{nombre_archivo}' fue creado con éxito")
-
-nombre_archivo = "Ocupacion Por Temporadax.json"
-
-with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
-   json.dump(Ocupacion_Temporada, archivo, indent=4, ensure_ascii=False)
-
-print(f"El Reporte '{nombre_archivo}' fue creado con éxito")
+Nombre_archivo(Registro_Servicio_Demandado, "Servicio Mas Demandado.json") 
+Nombre_archivo(Ocupacion_Temporada, "Ocupacion Por Temporada.json")
