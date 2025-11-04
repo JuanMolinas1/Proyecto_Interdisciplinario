@@ -24,14 +24,22 @@ heap = []
 # Conectar a la Base de Datos
 def Conectar_SQL():
     global cnx, cursor
-    cnx = mysql.connector.connect(
-        user = 'root',
-        password = '',
-        host = 'localhost',
-        database = 'hotel'
-    )
-    cursor = cnx.cursor(dictionary=True)
-    print("Conexión establecida")
+    try:
+        cnx = mysql.connector.connect(
+            user = 'root',
+            password = '',
+            host = 'localhost',
+            database = 'hotel'
+        )
+        cursor = cnx.cursor(dictionary=True)
+        print("Conexión establecida")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Usuario o contraseña incorrectos")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("La base de datos no existe!")
+        else:
+            print(err)
 
 
 # Crear las tablas con consultas SQL
