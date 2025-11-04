@@ -1,10 +1,10 @@
 select
     Clientes.id_cliente as Id_Cliente,
     Clientes.nombre as Nombre_Cliente,
-    Reservas.id_reserva as Id_Reservas,
-    Habitaciones.id_habitacion as Id_habitacion,
+    Reservas.id_reserva as Id_Reserva,
+    Habitaciones.id_habitacion as Id_Habitacion,
     Habitaciones.zona as Zona,
-    Servicios.tipo as Id_Servicios 
+    Servicios.tipo as Servicio
 from
     Clientes
 left join
