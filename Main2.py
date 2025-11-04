@@ -1,0 +1,246 @@
+# === LIBRERÍAS Y VARIABLES GLOBALES ===
+import mysql.connector
+from mysql.connector import errorcode
+import datetime
+from datetime import date
+import heapq
+import json
+
+# Variables Globales
+cursor = None
+cnx = None
+
+Tabla_Fecha = []
+Tabla_Tipo = []
+Tabla_Reservas = []
+Tabla_sinHash = []
+Tabla_Hash = []
+Grafos = []
+Monticulo = []
+heap = []
+
+
+# === CONEXIÓN SQL ===
+def Conectar_SQL():
+    global cnx, cursor
+    try:
+        cnx = mysql.connector.connect(
+            user='root',
+            password='',
+            host='localhost',
+            database='hotel'
+        )
+        cursor = cnx.cursor(dictionary=True)
+        print("Conexión establecida")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Usuario o contraseña incorrectos")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("La base de datos no existe!")
+        else:
+            print(err)
+
+
+# === FUNCIONES COMUNES ===
+def InnerJoin(consulta):
+    cursor.execute(consulta)
+    return cursor.fetchall()
+
+
+def Imprimir_Tabla(tabla, titulo):
+    if not tabla:
+        print(f"{titulo} N/a")
+        return
+    encabezados = list(tabla[0].keys())
+    ancho_columnas = []
+    for llave in encabezados:
+        max_ancho = max(len(str(fila[llave])) for fila in tabla)
+        max_ancho = max(max_ancho, len(llave))
+        ancho_columnas.append(max_ancho)
+
+    def Formatear_Fila(fila):
+        return " | ".join(str(fila[llave]).ljust(ancho_columnas[i]) for i, llave in enumerate(encabezados))
+
+    print(f"\n-- {titulo} --")
+    print(Formatear_Fila({llave: llave for llave in encabezados}))
+    print("-" * (sum(ancho_columnas) + 3 * (len(encabezados)-1)))
+    for fila in tabla:
+        print(Formatear_Fila(fila))
+
+
+# === CREAR TABLAS ===
+    # Grafos
+# === BÚSQUEDA BINARIA ===
+def Busqueda_Binaria(tabla, fecha_busqueda):
+    inicio, fin = 0, len(tabla) - 1
+    while inicio <= fin:
+        medio = (inicio + fin) // 2
+        fecha_medio = tabla[medio]['fecha_entrada']
+        if fecha_medio == fecha_busqueda:
+            return True, medio
+        elif fecha_medio < fecha_busqueda:
+            inicio = medio + 1
+        else:
+            fin = medio - 1
+    return False, None
+
+
+def Consultar_Fecha():
+    while True:
+        try:
+            print("\nBuscador de Fechas")
+            año = int(input("Ingrese el año: "))
+            mes = int(input("Ingrese el mes: "))
+            dia = int(input("Ingrese el día: "))
+            return datetime.date(año, mes, dia)
+        except ValueError:
+            print("Por favor ingrese una fecha válida")
+
+
+def Consultar_Tipo():
+    while True:
+        tipo = input("Ingrese el tipo de habitación buscado (Standard/Deluxe/Presidencial): ").capitalize()
+        if tipo in ["Standard", "Deluxe", "Presidencial"]:
+            return tipo
+        print("Ingrese un tipo válido")
+
+
+def Busqueda():
+    fecha = Consultar_Fecha()
+    encontro, medio = Busqueda_Binaria(Tabla_Fecha, fecha)
+    if encontro:
+        tipo = Consultar_Tipo()
+        if Tabla_Tipo[medio]["tipo"] == tipo:
+            Tabla_Encontrada = []
+            Tabla_Encontrada.append(Tabla_Reservas[medio])
+            Imprimir_Tabla(Tabla_Encontrada, "Reserva Encontrada")
+        else:
+            print("No se encontró una reserva con ese tipo.")
+    else:
+        print("No se encontró una reserva con esa fecha.")
+
+
+# === TABLA HASH ===
+def Mostrar_Hash():
+    Imprimir_Tabla(Tabla_sinHash, "Tabla Sin Hash")
+    Imprimir_Tabla(Tabla_Hash, "Tabla Hash")
+
+
+# === GRAFOS ===
+def Mostrar_Grafos():
+    Imprimir_Tabla(Grafos, "Grafos")
+
+
+# === MONTÍCULO ===
+def Mostrar_Monticulo():
+    if heap:
+        _, _, _, _, _, cliente_top = heapq.heappop(heap)
+        print("\n-- Reserva con mayor prioridad --")
+        Monticulo_Top = []
+        Monticulo_Top.append(cliente_top)
+        Imprimir_Tabla(Monticulo_Top, "Cliente con Mayor Prioridad (Montículo)")
+    else:
+        print("No hay clientes")
+
+
+# === INSERTAR RESERVA (PARTE 2) ===
+def Insertar_Reserva():
+    print("\n-- Insertar Nueva Reserva --")
+    habitacion = int(input("habitacion: "))
+    cliente = int(input("cliente: "))
+    recepcionista = int(input("recepcionista: "))
+    precio = int(input("precio: "))  
+    cant_huespedes = int(input("cant_huespedes: "))
+
+    print("Ingrese fecha de entrada:")
+    año = int(input("Año: "))
+    mes = int(input("Mes: "))
+    dia = int(input("Día: "))
+    fecha_entrada = datetime.date(año, mes, dia)
+
+    print("Ingrese fecha de salida:")
+    año = int(input("Año: "))
+    mes = int(input("Mes: "))
+    dia = int(input("Día: "))
+    fecha_salida = datetime.date(año, mes, dia)
+
+    sql = "INSERT INTO Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+    cursor.execute(sql,(habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida))
+    cnx.commit()
+    print("Reserva insertada correctamente.")
+
+    # Mostrar tabla actualizada
+    TablaActual = InnerJoin("select * from Reservas;")
+    Imprimir_Tabla(TablaActual, "Reservas Actualizadas")
+
+
+# === REPORTES JSON (PARTE 3) ===
+def Reportes_JSON():
+    # Servicio más demandado
+    Registro_Servicio_Demandado = InnerJoin(
+        "select Servicios.tipo as Tipo_Servicio, count(Servicios_Reservas.servicio) as Veces_Contratado "
+        "from Servicios_Reservas "
+        "join Servicios on Servicios_Reservas.servicio = Servicios.id_servicio "
+        "group by Servicios.tipo "
+        "order by Veces_Contratado desc "
+        "limit 1; "
+    )
+
+    # Ocupación por temporada
+    Ocupacion_Temporada = InnerJoin(
+        "select "
+        "year(fecha_entrada) AS Temporada, "
+        "case "
+        "when month(fecha_entrada) between 1 and 3 then 'Parte 1 (Enero - Marzo)' "
+        "when month(fecha_entrada) between 4 and 6 then 'Parte 2 (Abril - Junio)' "
+        "when month(fecha_entrada) between 7 and 9 then 'Parte 3 (Julio - Septiembre)' "
+        "when month(fecha_entrada) between 10 and 12 then 'Parte 4 (Octubre - Diciembre)' "
+        "end AS Parte, "
+        "count(*) as Cantidad_Reservas "
+        "from Reservas "
+        "group by Temporada, Parte "
+        "order BY Temporada, Parte; "
+    )
+
+    # Guardar archivos JSON
+    with open("Servicio_Mas_Demandado.json", 'w', encoding='utf-8') as archivo:
+        json.dump(Registro_Servicio_Demandado, archivo, indent=4, ensure_ascii=False)
+    print("El Reporte 'Servicio_Mas_Demandado.json' fue creado con éxito")
+
+    with open("Ocupacion_Por_Temporada.json", 'w', encoding='utf-8') as archivo:
+        json.dump(Ocupacion_Temporada, archivo, indent=4, ensure_ascii=False)
+    print("El Reporte 'Ocupacion_Por_Temporada.json' fue creado con éxito")
+
+
+# === MAIN ===
+def main():
+    Conectar_SQL()
+    Crear_Tablas()
+
+# === MAIN ===
+def main():
+    Conectar_SQL()
+    Crear_Tablas()
+
+    # Mostrar tabla hash
+    Mostrar_Hash()
+
+    # Mostrar grafos
+    Mostrar_Grafos()
+
+    # Mostrar montículo
+    Mostrar_Monticulo()
+
+    # Insertar nueva reserva
+    Insertar_Reserva()
+
+    # Búsqueda binaria de reservas
+    Busqueda()
+
+    # Generar reportes JSON
+    Reportes_JSON()
+
+
+# Ejecutar programa
+if __name__ == "__main__":
+    main()
