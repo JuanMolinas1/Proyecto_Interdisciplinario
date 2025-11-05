@@ -12,14 +12,14 @@ cursor = None
 cnx = None
 
 # Las tablas
-Tabla_Fecha = []
-Tabla_Tipo = []
 Tabla_Reservas = []
 Tabla_sinHash = []
 Tabla_Hash = []
 Grafos = []
 Monticulo = []
 heap = []
+Registro_Servicio_Demandado = []
+Ocupacion_Temporada = []
 
 
 # Conectar a la Base de Datos
@@ -51,21 +51,9 @@ def InnerJoin(consulta):
 
 # Crear las tablas usando las consultas de antes
 def Crear_Tablas():
-    global Tabla_Fecha, Tabla_Tipo, Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap
+    global Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap, Registro_Servicio_Demandado, Ocupacion_Temporada
 
-    # Tablas de búsqueda binaria
-    Tabla_Fecha = InnerJoin(
-        'select Reservas.fecha_entrada '
-        'from Reservas '
-        'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion '
-        'order by Reservas.fecha_entrada asc;'
-    )
-    Tabla_Tipo = InnerJoin(
-        'select Habitaciones.tipo '
-        'from Reservas '
-        'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion '
-        'order by Reservas.fecha_entrada asc;'
-    )
+    # Tabla de búsqueda binaria
     Tabla_Reservas = InnerJoin(
         'select Habitaciones.numero, Habitaciones.zona, Habitaciones.tipo, Reservas.fecha_entrada '
         'from Reservas '
@@ -132,6 +120,30 @@ def Crear_Tablas():
     heapq.heapify(heap)
     print("Tablas creadas correctamente.")
 
+    Registro_Servicio_Demandado = InnerJoin(
+        "select Servicios.tipo as Tipo_Servicio, count(Servicios_Reservas.servicio) as Veces_Contratado "
+        "from Servicios_Reservas "
+        "join Servicios on Servicios_Reservas.servicio = Servicios.id_servicio "
+        "group by Servicios.tipo "
+        "order by Veces_Contratado desc "
+        "limit 1; "
+    )
+
+    Ocupacion_Temporada = InnerJoin(
+        "select "
+        "year(fecha_entrada) AS Temporada, "
+        "case "
+        "when month(fecha_entrada) between 1 and 3 then 'Parte 1 (Enero - Marzo)' "
+        "when month(fecha_entrada) between 4 and 6 then 'Parte 2 (Abril - Junio)' "
+        "when month(fecha_entrada) between 7 and 9 then 'Parte 3 (Julio - Septiembre)' "
+        "when month(fecha_entrada) between 10 and 12 then 'Parte 4 (Octubre - Diciembre)' "
+        "end AS Parte, "
+        "count(*) as Cantidad_Reservas "
+        "from Reservas "
+        "group by Temporada, Parte "
+        "order BY Temporada, Parte; "
+    )
+
 
 # Impresion de Tablas con formato
 def Imprimir_Tabla(tabla, titulo):
@@ -155,7 +167,76 @@ def Imprimir_Tabla(tabla, titulo):
         print(Formatear_Fila(fila))
 
 
-# Punto 2.1 Busqueda Binaria para buscar reservas segun fecha de inicio y tipo de habitación
+# Punto 2.1 Tabla Ordenada para Busqueda Binaria
+def Tabla_Reservas():
+    Imprimir_Tabla(Tabla_Reservas, "Tabla Reservas")
+
+# Punto 2.2 Tabla Hash para Clientes frecuentes (>= 2 Reservas)
+def Mostrar_Hash():
+    Imprimir_Tabla(Tabla_sinHash, "Tabla Sin Hash")
+    Imprimir_Tabla(Tabla_Hash, "Tabla Hash")
+
+
+#Punto 2.3 Grafos para Clientes con Reservas y Servicios
+def Mostrar_Grafos():
+    Imprimir_Tabla(Grafos, "Grafos")
+
+
+# Punto 2.4 Montículo para Reserva con mayor prioridad
+def Mostrar_Monticulo():
+    if heap:
+        _, _, _, _, _, cliente_top = heapq.heappop(heap)
+        print("\n-- Reserva con mayor prioridad --")
+        Monticulo_Top = []
+        Monticulo_Top.append(cliente_top)
+        Imprimir_Tabla(Monticulo_Top, "Cliente con Mayor Prioridad (Montículo)")
+    else:
+        print("No hay clientes")
+
+
+# Punto 3.1 Insertar Reserva nueva
+def Insertar_Reserva():
+    print("\n-- Insertar Nueva Reserva --")
+    while True:
+        try:
+            habitacion = int(input("habitacion: "))
+            cliente = int(input("cliente: "))
+            recepcionista = int(input("recepcionista: "))
+            precio = int(input("precio: "))  
+            cant_huespedes = int(input("cant_huespedes: "))
+            break
+        except ValueError:
+            print("Ingrese los datos correctamente")
+
+    print("Ingrese fecha de entrada:")
+    while True:
+        try:
+            año = int(input("Año: "))
+            mes = int(input("Mes: "))
+            dia = int(input("Día: "))
+            fecha_entrada = datetime.date(año, mes, dia)
+            break
+        except ValueError:
+            print("Ingrese la fecha correctamente, (AAAA/M/D)")
+
+    print("Ingrese fecha de salida:")
+    while True:
+        try:
+            año = int(input("Año: "))
+            mes = int(input("Mes: "))
+            dia = int(input("Día: "))
+            fecha_salida = datetime.date(año, mes, dia)
+            break
+        except ValueError:
+            print("Ingrese la fecha correctamente (AAAA/M/D)")
+
+    sql = "INSERT INTO Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+    cursor.execute(sql,(habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida))
+    cnx.commit()
+    print("Reserva insertada correctamente.")
+
+
+# Punto 3.2 Busqueda Binaria para buscar reservas segun fecha de inicio y tipo de habitación
 # Busqueda Binaria para fecha pedida
 def Busqueda_Binaria(tabla, fecha_busqueda):
     inicio, fin = 0, len(tabla) - 1
@@ -193,10 +274,10 @@ def Consultar_Tipo():
 # Comparacion de todos los valores finales
 def Busqueda():
     fecha = Consultar_Fecha()
-    encontro, medio = Busqueda_Binaria(Tabla_Fecha, fecha)
+    encontro, medio = Busqueda_Binaria(Tabla_Reservas, fecha)
     if encontro:
         tipo = Consultar_Tipo()
-        if Tabla_Tipo[medio]["tipo"] == tipo:
+        if Tabla_Reservas[medio]["tipo"] == tipo:
             Tabla_Encontrada = []
             Tabla_Encontrada.append(Tabla_Reservas[medio])
             Imprimir_Tabla(Tabla_Encontrada, "Reserva Encontrada")
@@ -206,37 +287,26 @@ def Busqueda():
         print("No se encontró una reserva con esa fecha.")
 
 
-# Punto 2.2 Tabla Hash para Clientes frecuentes (>= 2 Reservas)
-def Mostrar_Hash():
-    Imprimir_Tabla(Tabla_sinHash, "Tabla Sin Hash")
-    Imprimir_Tabla(Tabla_Hash, "Tabla Hash")
+# Ejercicio 3.3 Reportes JSON
+def Reportes_JSON():
+    with open("Servicio_Mas_Demandado.json", 'w', encoding='utf-8') as archivo:
+        json.dump(Registro_Servicio_Demandado, archivo, indent=4, ensure_ascii=False)
+    print("El Reporte 'Servicio_Mas_Demandado.json' fue creado con éxito")
+
+    with open("Ocupacion_Por_Temporada.json", 'w', encoding='utf-8') as archivo:
+        json.dump(Ocupacion_Temporada, archivo, indent=4, ensure_ascii=False)
+    print("El Reporte 'Ocupacion_Por_Temporada.json' fue creado con éxito")
 
 
-#Punto 2.3 Grafos para Clientes con Reservas y Servicios
-def Mostrar_Grafos():
-    Imprimir_Tabla(Grafos, "Grafos")
-
-
-# Punto 2.4 Montículo para Reserva con mayor prioridad
-def Mostrar_Monticulo():
-    if heap:
-        _, _, _, _, _, cliente_top = heapq.heappop(heap)
-        print("\n-- Reserva con mayor prioridad --")
-        Monticulo_Top = []
-        Monticulo_Top.append(cliente_top)
-        Imprimir_Tabla(Monticulo_Top, "Cliente con Mayor Prioridad (Montículo)")
-    else:
-        print("No hay clientes")
-
-
-# Inicialización del Programa
+# === MAIN ===
 def main():
     Conectar_SQL()
     Crear_Tablas()
-
-    Busqueda()
     Mostrar_Hash()
     Mostrar_Grafos()
     Mostrar_Monticulo()
+    Insertar_Reserva()
+    Busqueda()
+    Reportes_JSON()
 
 main()
