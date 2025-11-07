@@ -131,21 +131,21 @@ insert into Zonas (id_zona, nombre_zona) values
 ('D', 'Habitaciones Baratas');
 
 insert into Habitaciones (numero, zona, estado, tipo, capacidad) values
-(101, 'A', 'Disponible', 'Presidencial', 3),
-(102, 'C', 'Ocupada', 'Suite', 2),
+(101, 'D', 'Disponible', 'Standard', 3),
+(102, 'D', 'Ocupada', 'Standard', 2),
 (103, 'D', 'Limpiando', 'Standard', 2),
 (104, 'D', 'Disponible', 'Standard', 1),
-(105, 'A', 'Ocupada', 'Presidencial', 4),
-(106, 'C', 'Disponible', 'Suite', 2),
-(107, 'D', 'Limpiando', 'Standard', 1),
-(108, 'D', 'Disponible', 'Standard', 1),
-(109, 'C', 'Ocupada', 'Suite', 3),
-(110, 'D', 'Disponible', 'Standard', 2),
-(111, 'A', 'Limpiando', 'Presidencial', 4),
-(112, 'D', 'Disponible', 'Standard', 1),
-(113, 'C', 'Ocupada', 'Suite', 2),
-(114, 'D', 'Disponible', 'Standard', 2),
-(115, 'A', 'Disponible', 'Presidencial', 3);
+(105, 'D', 'Ocupada', 'Standard', 4),
+(106, 'A', 'Disponible', 'Suite', 2),
+(107, 'A', 'Limpiando', 'Suite', 1),
+(108, 'A', 'Disponible', 'Suite', 1),
+(109, 'A', 'Ocupada', 'Suite', 3),
+(110, 'A', 'Disponible', 'Suite', 2),
+(111, 'C', 'Limpiando', 'Presidencial', 4),
+(112, 'C', 'Disponible', 'Presidencial', 1),
+(113, 'C', 'Ocupada', 'Presidencial', 2),
+(114, 'C', 'Disponible', 'Presidencial', 2),
+(115, 'C', 'Disponible', 'Presidencial', 3);
 
 insert into Ascensores (estado_ascensor, peso_soportado, zona_hotel) values
 ('En Funcionamiento', default, 'A'),
@@ -339,3 +339,4 @@ from Habitaciones
 inner join Reservas on Habitaciones.id_habitacion = Reservas.habitacion
 where Habitaciones.tipo = "Deluxe" and Habitaciones.zona = "A"
 group by Habitaciones.id_habitacion, Habitaciones.tipo, Habitaciones.zona;
+
