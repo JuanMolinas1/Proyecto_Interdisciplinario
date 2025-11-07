@@ -302,11 +302,27 @@ def Reportes_JSON():
 def main():
     Conectar_SQL()
     Crear_Tablas()
-    Mostrar_Hash()
-    Mostrar_Grafos()
-    Mostrar_Monticulo()
-    Insertar_Reserva()
-    Busqueda()
-    Reportes_JSON()
+    while True:
+        menu = int(input("\n\ningrese un numero para ver una opcion del menu: " \
+        "\n1. Hash"
+        "\n2. Grafos"
+        "\n3. Monticulo"
+        "\n4. Reserva"
+        "\n5. Busquedas"
+        "\n6. Reportes_JSON "))
+        if menu == 1:
+            Mostrar_Hash()
+        elif menu == 2:
+            Mostrar_Grafos()
+        elif menu==3:
+            Mostrar_Monticulo()
+        elif menu==4:
+            Insertar_Reserva()
+        elif menu==5:
+            Busqueda()
+        elif menu== 6:
+            Reportes_JSON()
+        elif menu== 0:
+            break
 
 main()
