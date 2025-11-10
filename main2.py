@@ -300,11 +300,11 @@ def Generar_Reporte(nombre_archivo, tabla):
     return nombre_archivo
 
 # Reporte Servicio
-@app.route("/crear_registro_servicio")
+@app.route("/registro_servicio")
 def Pagina_Servicio():
     return render_template("ejercicios/crear_registo_servicio.html")
 
-@app.route("/Pagina_Servicio", methods = ["POST"])
+@app.route("/descargar_registro_servicio", methods = ["POST"])
 def Descargar_Servicio():
     Conectar_SQL()
     Crear_Tablas()
@@ -312,11 +312,11 @@ def Descargar_Servicio():
     return send_file("Servicio_Mas_Demandado.json", as_attachment = True)
 
 # Reporte Reserva
-@app.route("/crear_registro_reserva")
+@app.route("/registro_reserva")
 def Pagina_Reserva():
     return render_template("ejercicios/crear_registo_reserva.html")
 
-@app.route("/descargar_json", methods = ["POST"])
+@app.route("/descargar_registro_reserva", methods = ["POST"])
 def Descargar_Reserva():
     Conectar_SQL()
     Crear_Tablas()
