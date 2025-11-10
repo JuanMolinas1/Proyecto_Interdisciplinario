@@ -5,7 +5,7 @@ import datetime
 from datetime import date
 import heapq
 import json
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file, request, render_template
 
 
 # Variables Globales
@@ -293,23 +293,36 @@ def Busqueda():
 
 
 # Ejercicio 3.3 Reportes JSON
-def Generar_reporte(nombre_archivo, tabla):
+def Generar_Reporte(nombre_archivo, tabla):
     with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
         json.dump(tabla, archivo, indent=4, ensure_ascii=False)
     print(f"El Reporte {nombre_archivo} fue creado con éxito")
     return nombre_archivo
 
-@app.route("/")
-def index():
-    return_template("index.html")
+# Reporte Servicio
+@app.route("/crear_registro_servicio")
+def Pagina_Servicio():
+    return render_template("ejercicios/crear_registo_servicio.html")
 
 @app.route("/descargar_json", methods = ["POST"])
-
-def descargar_json(funcion):
+def Descargar_Servicio():
     Conectar_SQL()
     Crear_Tablas()
-    filename = funcion
-    return send_file(filename, as_attachment = True)
+    Generar_Reporte("Servicio_Mas_Demandado.json", Registro_Servicio_Demandado)
+    return send_file("Servicio_Mas_Demandado.json", as_attachment = True)
+
+# Reporte Reserva
+@app.route("/crear_registro_reserva")
+def Pagina_Reserva():
+    return render_template("ejercicios/crear_registo_reserva.html")
+
+@app.route("/descargar_json", methods = ["POST"])
+def Descargar_Reserva():
+    Conectar_SQL()
+    Crear_Tablas()
+    Generar_Reporte("Servicio_Mas_Demandado.json", Registro_Servicio_Demandado)
+    return send_file("Servicio_Mas_Demandado.json", as_attachment = True)
+
 
 # Main
 def main():
@@ -336,9 +349,9 @@ def main():
             elif menu == 5:
                 Busqueda()
             elif menu == 6:
-                Generar_reporte("Servicio_Mas_Demandado.json", Registro_Servicio_Demandado)
+                Generar_Reporte("Servicio_Mas_Demandado.json", Registro_Servicio_Demandado)
             elif menu == 7:
-                Generar_reporte("Ocupacion_Por_Temporada.json", Registro_Ocupacion_Temporada)
+                Generar_Reporte("Ocupacion_Por_Temporada.json", Registro_Ocupacion_Temporada)
             elif menu== 0:
                 break
         except ValueError:
