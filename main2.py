@@ -304,7 +304,7 @@ def Generar_Reporte(nombre_archivo, tabla):
 def Pagina_Servicio():
     return render_template("ejercicios/crear_registo_servicio.html")
 
-@app.route("/descargar_json", methods = ["POST"])
+@app.route("/Pagina_Servicio", methods = ["POST"])
 def Descargar_Servicio():
     Conectar_SQL()
     Crear_Tablas()
@@ -320,8 +320,8 @@ def Pagina_Reserva():
 def Descargar_Reserva():
     Conectar_SQL()
     Crear_Tablas()
-    Generar_Reporte("Servicio_Mas_Demandado.json", Registro_Servicio_Demandado)
-    return send_file("Servicio_Mas_Demandado.json", as_attachment = True)
+    Generar_Reporte("Ocupacion_Por_Temporada.json", Registro_Ocupacion_Temporada)
+    return send_file("Ocupacion_Por_Temporada.json", as_attachment = True)
 
 
 # Main
