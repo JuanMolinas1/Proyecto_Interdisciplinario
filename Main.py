@@ -303,26 +303,29 @@ def main():
     Conectar_SQL()
     Crear_Tablas()
     while True:
-        menu = int(input("\n\ningrese un numero para ver una opcion del menu: " \
-        "\n1. Hash"
-        "\n2. Grafos"
-        "\n3. Monticulo"
-        "\n4. Reserva"
-        "\n5. Busquedas"
-        "\n6. Reportes_JSON "))
-        if menu == 1:
-            Mostrar_Hash()
-        elif menu == 2:
-            Mostrar_Grafos()
-        elif menu==3:
-            Mostrar_Monticulo()
-        elif menu==4:
-            Insertar_Reserva()
-        elif menu==5:
-            Busqueda()
-        elif menu== 6:
-            Reportes_JSON()
-        elif menu== 0:
-            break
+        try:
+            menu = int(input("\n\ningrese un numero para ver una opcion del menu: " \
+            "\n1. Hash"
+            "\n2. Grafos"
+            "\n3. Monticulo"
+            "\n4. Reserva"
+            "\n5. Busquedas"
+            "\n6. Reportes_JSON "))
+            if menu == 1:
+                Mostrar_Hash()
+            elif menu == 2:
+                Mostrar_Grafos()
+            elif menu==3:
+                Mostrar_Monticulo()
+            elif menu==4:
+                Insertar_Reserva()
+            elif menu==5:
+                Busqueda()
+            elif menu== 6:
+                Reportes_JSON()
+            elif menu== 0:
+                break
+        except ValueError:
+            print("Ingrese un tipo de dato válido.")
 
 main()
