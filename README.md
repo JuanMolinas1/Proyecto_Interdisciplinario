@@ -1,30 +1,10 @@
-# Proyecto_Interdisciplinario
-## Ciclo Lectivo: 2025
-## Curso y División: 4° 2°
-## Docentes:
-  - Federico Leonel Bouzon
-  - Sofia Marmol
-## Integrantes:
-  - Pablo Cardozo
-  - Gonzalo Delgado
-  - Santiago Goldfarb
-  - Juan Molinas
-# README del Proyecto
-
-## Instrucciones de instalación y uso
-
+# Instrucciones de instalación y uso
 1. Descargar el archivo **`Proyecto.rar`**.
-
 2. Descomprimir el archivo en cualquier carpeta.
-
 3. Ejecutar **XAMPP** e iniciar los servicios **Apache** y **MySQL**.
-
 4. Abrir **MySQL Workbench** y crear una conexión con cualquier nombre.
-
 5. Ir a **Data Import**, seleccionar la opción **Import from self-contained file** y elegir, dentro de la carpeta del proyecto, el archivo **`hotel.sql`**.
-
 6. Encender la base de datos.
-
 7. Abrir el archivo de Python del proyecto y descargar las librerías necesarias ejecutando en la terminal:
 
    ```bash
