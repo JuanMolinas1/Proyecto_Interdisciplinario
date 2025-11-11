@@ -67,8 +67,10 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 6. Ir a File/Open SQL Script elegir dentro de la carpeta del proyecto el archivo `hotel.sql`.
 7. Encender la base de datos.
 8. Abrir cmd y ejecutar la sigueinte linea de código:
+
    ```bash
    python -m pip install mysql-connector
    ```
+
 9. Abrir la carpeta de Proyecto con Visual Studio
 10. Ejecutar el archivo de Python y comenzar a usar el programa.
