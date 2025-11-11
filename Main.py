@@ -313,7 +313,7 @@ def main():
             "\n5. Buscar Reservas"
             "\n6. Crear Reporte Servicio"
             "\n7. Crear Reporte Reserva"
-            "\n -"))
+            "\n - "))
             if menu == 1:
                 Mostrar_Hash()
             elif menu == 2:
