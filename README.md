@@ -3,7 +3,7 @@
 2. Descomprimir el archivo en cualquier carpeta.
 3. Ejecutar **XAMPP** e iniciar los servicios **Apache** y **MySQL**.
 4. Abrir **MySQL Workbench** y crear una conexión con cualquier nombre.
-5. Ir a **Data Import**, seleccionar la opción **Import from self-contained file** y elegir, dentro de la carpeta del proyecto, el archivo **`hotel.sql`**.
+5. Ir a **Data Import/Restore**, seleccionar la opción **Import from self-contained file** y elegir, dentro de la carpeta del proyecto, el archivo **`hotel.sql`**.
 6. Encender la base de datos.
 7. Abrir el archivo de Python del proyecto y descargar las librerías necesarias ejecutando en la terminal:
 
