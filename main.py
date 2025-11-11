@@ -20,8 +20,8 @@ Tabla_Hash = []
 Grafos = []
 Monticulo = []
 heap = []
-Registro_Servicio_Demandado = []
-Registro_Ocupacion_Temporada = []
+Reporte_Servicio_Demandado = []
+Reporte_Ocupacion_Temporada = []
 recepcionistas = [1,5,9,13]
 
 
@@ -54,7 +54,7 @@ def InnerJoin(consulta):
 
 # Crear las tablas usando las consultas de antes
 def Crear_Tablas():
-    global Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap, Registro_Servicio_Demandado, Registro_Ocupacion_Temporada
+    global Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap, Reporte_Servicio_Demandado, Reporte_Ocupacion_Temporada
 
     # Tabla de búsqueda binaria
     Tabla_Reservas = InnerJoin(
@@ -121,7 +121,7 @@ def Crear_Tablas():
     heapq.heapify(heap)
     print("Tablas creadas correctamente.")
 
-    Registro_Servicio_Demandado = InnerJoin(
+    Reporte_Servicio_Demandado = InnerJoin(
         "select Servicios.tipo as Tipo_Servicio, count(Servicios_Reservas.servicio) as Veces_Contratado "
         "from Servicios_Reservas "
         "join Servicios on Servicios_Reservas.servicio = Servicios.id_servicio "
@@ -130,7 +130,7 @@ def Crear_Tablas():
         "limit 1; "
     )
 
-    Registro_Ocupacion_Temporada = InnerJoin(
+    Reporte_Ocupacion_Temporada = InnerJoin(
         "select "
         "year(fecha_entrada) AS Temporada, "
         "case "
@@ -168,15 +168,10 @@ def Imprimir_Tabla(tabla, titulo):
         print(Formatear_Fila(fila))
 
 
-# Punto 2.1 Tabla Ordenada para Busqueda Binaria
-def Tabla_Reservas():
-    Imprimir_Tabla(Tabla_Reservas, "Tabla Reservas")
-
-
 # Punto 2.2 Tabla Hash para Clientes frecuentes (>= 2 Reservas)
 def Mostrar_Hash():
-    Imprimir_Tabla(Tabla_sinHash, "Tabla Sin Hash")
-    Imprimir_Tabla(Tabla_Hash, "Tabla Hash")
+    Imprimir_Tabla(Tabla_sinHash, "Clientes Frecuentes (Tabla sin Hash)")
+    Imprimir_Tabla(Tabla_Hash, "Clientes Frecuentes (Tabla Hash)")
 
 
 #Punto 2.3 Grafos para Clientes con Reservas y Servicios
@@ -320,6 +315,7 @@ def main():
             "\n5. Buscar Reservas"
             "\n6. Crear Reporte Servicio"
             "\n7. Crear Reporte Reserva"
+            "\n0. Cerrar Programa"
             "\n-> "))
             if menu == 1:
                 Mostrar_Hash()
@@ -334,14 +330,14 @@ def main():
             elif menu == 6:
                 while True:
                     try:
-                        Generar_Reporte("Servicio_Mas_Demandado", Registro_Servicio_Demandado)
+                        Generar_Reporte("Servicio_Mas_Demandado", Reporte_Servicio_Demandado)
                         break
                     except FileNotFoundError:
                         os.makedirs("archivos")
             elif menu == 7:
                 while True:
                     try:
-                        Generar_Reporte("Ocupacion_Por_Temporada", Registro_Ocupacion_Temporada)
+                        Generar_Reporte("Ocupacion_Por_Temporada", Reporte_Ocupacion_Temporada)
                         break
                     except FileNotFoundError:
                         os.makedirs("archivos")
