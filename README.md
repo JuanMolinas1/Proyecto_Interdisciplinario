@@ -57,7 +57,7 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 
 ---
 
-# Manual de instalación
+# Manual de Usuario
 
 1. Descargar el archivo `Proyecto.rar`.
 
