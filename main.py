@@ -1,7 +1,6 @@
 # Librerias
 import os
 import mysql.connector
-#python -m pip install mysql-connector
 from mysql.connector import errorcode
 import datetime
 from datetime import date
@@ -23,6 +22,7 @@ Monticulo = []
 heap = []
 Registro_Servicio_Demandado = []
 Registro_Ocupacion_Temporada = []
+recepcionistas = [1,5,9,13]
 
 
 # Conectar a la Base de Datos
@@ -41,7 +41,7 @@ def Conectar_SQL():
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Usuario o contraseña incorrectos")
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("La base de datos no existe!")
+            print("La base de datos no existe")
         else:
             print(err)
 
@@ -63,7 +63,6 @@ def Crear_Tablas():
         'inner join Habitaciones on Reservas.habitacion = Habitaciones.id_habitacion '
         'order by Reservas.fecha_entrada asc;'
     )
-
 
     # Tabla hash
     Tabla_sinHash = InnerJoin(
@@ -97,7 +96,6 @@ def Crear_Tablas():
         "left join Servicios on Servicios_Reservas.servicio = Servicios.id_servicio " \
         "order by Id_Cliente asc; " \
     )
-
 
     # Montículo
     Monticulo = InnerJoin(
@@ -174,6 +172,7 @@ def Imprimir_Tabla(tabla, titulo):
 def Tabla_Reservas():
     Imprimir_Tabla(Tabla_Reservas, "Tabla Reservas")
 
+
 # Punto 2.2 Tabla Hash para Clientes frecuentes (>= 2 Reservas)
 def Mostrar_Hash():
     Imprimir_Tabla(Tabla_sinHash, "Tabla Sin Hash")
@@ -194,7 +193,7 @@ def Mostrar_Monticulo():
         Monticulo_Top.append(cliente_top)
         Imprimir_Tabla(Monticulo_Top, "Cliente con Mayor Prioridad (Montículo)")
     else:
-        print("No hay clientes")
+        print("No hay clientes\n\n")
 
 
 # Punto 3.1 Insertar Reserva nueva
@@ -202,14 +201,17 @@ def Insertar_Reserva():
     print("\n-- Insertar Nueva Reserva --")
     while True:
         try:
-            habitacion = int(input("habitacion: "))
-            cliente = int(input("cliente: "))
-            recepcionista = int(input("recepcionista: "))
-            precio = int(input("precio: "))  
-            cant_huespedes = int(input("cant_huespedes: "))
-            break
+            habitacion = int(input("Habitacion (1-5 Standard; 6-10 Suite; 11-15 Presidencial): "))
+            cliente = int(input("Cliente (1-15): "))
+            recepcionista = int(input("Recepcionista (1,5,9,13): "))
+            precio = int(input("Precio: "))  
+            cant_huespedes = int(input("Cantidad de Huespedes (1-8): "))
+            if habitacion > 15 or cliente > 15 or recepcionista not in recepcionistas or cant_huespedes > 8:
+                print("Ingrese datos válidos\n\n")
+            else:
+                break
         except ValueError:
-            print("Ingrese los datos correctamente")
+            print("Ingrese los datos correctamente\n\n")
 
     print("Ingrese fecha de entrada:")
     while True:
@@ -220,7 +222,7 @@ def Insertar_Reserva():
             fecha_entrada = datetime.date(año, mes, dia)
             break
         except ValueError:
-            print("Ingrese la fecha correctamente, (AAAA/M/D)")
+            print("Ingrese la fecha correctamente (AAAA/M/D)\n\n")
 
     print("Ingrese fecha de salida:")
     while True:
@@ -229,14 +231,18 @@ def Insertar_Reserva():
             mes = int(input("Mes: "))
             dia = int(input("Día: "))
             fecha_salida = datetime.date(año, mes, dia)
-            break
+            if fecha_salida < fecha_entrada:
+                print("La fecha de salida no puede ser previa a la fecha de entrada\n\n")
+            else:
+                break
         except ValueError:
-            print("Ingrese la fecha correctamente (AAAA/M/D)")
+            print("Ingrese la fecha correctamente (AAAA/M/D)\n\n")
 
     sql = "INSERT INTO Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida) VALUES (%s, %s, %s, %s, %s, %s, %s);"
     cursor.execute(sql,(habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida))
     cnx.commit()
-    print("Reserva insertada correctamente.")
+    print("Reserva insertada correctamente")
+    Crear_Tablas()
 
 
 # Punto 3.2 Busqueda Binaria para buscar reservas segun fecha de inicio y tipo de habitación
@@ -258,21 +264,21 @@ def Busqueda_Binaria(tabla, fecha_busqueda):
 def Consultar_Fecha():
     while True:
         try:
-            print("\nBuscador de Fechas")
+            print("\nBuscador de 'fecha_entrada'")
             año = int(input("Ingrese el año: "))
             mes = int(input("Ingrese el mes: "))
             dia = int(input("Ingrese el día: "))
             return datetime.date(año, mes, dia)
         except ValueError:
-            print("Por favor ingrese una fecha válida")
+            print("Por favor ingrese una fecha válida\n\n")
 
 # Pedir tipo para comparar
 def Consultar_Tipo():
     while True:
-        tipo = input("Ingrese el tipo de habitación buscado (Standard/Deluxe/Presidencial): ").capitalize()
+        tipo = input("Ingrese el tipo de habitación buscado (Standard/Deluxe/Presidencial):\n(1-5 Standard; 6-10 Suite; 11-15 Presidencial)").capitalize()
         if tipo in ["Standard", "Deluxe", "Presidencial"]:
             return tipo
-        print("Ingrese un tipo válido")
+        print("Ingrese un tipo válido\n\n")
 
 # Comparacion de todos los valores finales
 def Busqueda():
@@ -283,7 +289,7 @@ def Busqueda():
         if Tabla_Reservas[medio]["tipo"] == tipo:
             Tabla_Encontrada = []
             Tabla_Encontrada.append(Tabla_Reservas[medio])
-            Imprimir_Tabla(Tabla_Encontrada, "Reserva Encontrada")
+            Imprimir_Tabla(Tabla_Encontrada, "Reserva Buscada")
         else:
             print("No se encontró una reserva con ese tipo.")
     else:
@@ -305,7 +311,8 @@ def main():
     Crear_Tablas()
     while True:
         try:
-            menu = int(input("\n\n== Hoteles Connecticut == \nIngrese que desea hacer:"
+            menu = int(input("\n\n== Hoteles Connecticut =="
+            "\nIngrese que desea hacer:"
             "\n1. Crear Tabla Hash/Sin Hash"
             "\n2. Crear Grafos"
             "\n3. Crear Monticulo"
@@ -313,7 +320,7 @@ def main():
             "\n5. Buscar Reservas"
             "\n6. Crear Reporte Servicio"
             "\n7. Crear Reporte Reserva"
-            "\n - "))
+            "\n-> "))
             if menu == 1:
                 Mostrar_Hash()
             elif menu == 2:
