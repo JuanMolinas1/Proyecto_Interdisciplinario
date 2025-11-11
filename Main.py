@@ -1,10 +1,13 @@
 # Librerias
+import os
 import mysql.connector
+#python -m pip install mysql-connector
 from mysql.connector import errorcode
 import datetime
 from datetime import date
 import heapq
 import json
+
 
 # Variables Globales
 # Para la conexion SQL
@@ -19,7 +22,7 @@ Grafos = []
 Monticulo = []
 heap = []
 Registro_Servicio_Demandado = []
-Ocupacion_Temporada = []
+Registro_Ocupacion_Temporada = []
 
 
 # Conectar a la Base de Datos
@@ -51,7 +54,7 @@ def InnerJoin(consulta):
 
 # Crear las tablas usando las consultas de antes
 def Crear_Tablas():
-    global Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap, Registro_Servicio_Demandado, Ocupacion_Temporada
+    global Tabla_Reservas, Tabla_sinHash, Tabla_Hash, Grafos, Monticulo, heap, Registro_Servicio_Demandado, Registro_Ocupacion_Temporada
 
     # Tabla de búsqueda binaria
     Tabla_Reservas = InnerJoin(
@@ -129,7 +132,7 @@ def Crear_Tablas():
         "limit 1; "
     )
 
-    Ocupacion_Temporada = InnerJoin(
+    Registro_Ocupacion_Temporada = InnerJoin(
         "select "
         "year(fecha_entrada) AS Temporada, "
         "case "
@@ -288,41 +291,53 @@ def Busqueda():
 
 
 # Ejercicio 3.3 Reportes JSON
-def Reportes_JSON():
-    with open("Servicio_Mas_Demandado.json", 'w', encoding='utf-8') as archivo:
-        json.dump(Registro_Servicio_Demandado, archivo, indent=4, ensure_ascii=False)
-    print("El Reporte 'Servicio_Mas_Demandado.json' fue creado con éxito")
-
-    with open("Ocupacion_Por_Temporada.json", 'w', encoding='utf-8') as archivo:
-        json.dump(Ocupacion_Temporada, archivo, indent=4, ensure_ascii=False)
-    print("El Reporte 'Ocupacion_Por_Temporada.json' fue creado con éxito")
+def Generar_Reporte(nombre_archivo, tabla):
+    ruta = f"archivos/{nombre_archivo}.json"
+    with open(ruta, 'w', encoding='utf-8') as archivo:
+        json.dump(tabla, archivo, indent=4, ensure_ascii=False)
+    print(f"El Reporte {nombre_archivo} fue creado con éxito")
+    return ruta
 
 
-# === MAIN ===
+# Main
 def main():
     Conectar_SQL()
     Crear_Tablas()
     while True:
         try:
-            menu = int(input("\n\ningrese un numero para ver una opcion del menu: " \
-            "\n1. Hash"
-            "\n2. Grafos"
-            "\n3. Monticulo"
-            "\n4. Reserva"
-            "\n5. Busquedas"
-            "\n6. Reportes_JSON "))
+            menu = int(input("\n\n== Hoteles Connecticut == \nIngrese que desea hacer:"
+            "\n1. Crear Tabla Hash/Sin Hash"
+            "\n2. Crear Grafos"
+            "\n3. Crear Monticulo"
+            "\n4. Crear Reservas"
+            "\n5. Buscar Reservas"
+            "\n6. Crear Reporte Servicio"
+            "\n7. Crear Reporte Reserva"
+            "\n -"))
             if menu == 1:
                 Mostrar_Hash()
             elif menu == 2:
                 Mostrar_Grafos()
-            elif menu==3:
+            elif menu == 3:
                 Mostrar_Monticulo()
-            elif menu==4:
+            elif menu == 4:
                 Insertar_Reserva()
-            elif menu==5:
+            elif menu == 5:
                 Busqueda()
-            elif menu== 6:
-                Reportes_JSON()
+            elif menu == 6:
+                while True:
+                    try:
+                        Generar_Reporte("Servicio_Mas_Demandado", Registro_Servicio_Demandado)
+                        break
+                    except FileNotFoundError:
+                        os.makedirs("archivos")
+            elif menu == 7:
+                while True:
+                    try:
+                        Generar_Reporte("Ocupacion_Por_Temporada", Registro_Ocupacion_Temporada)
+                        break
+                    except FileNotFoundError:
+                        os.makedirs("archivos")
             elif menu== 0:
                 break
         except ValueError:
