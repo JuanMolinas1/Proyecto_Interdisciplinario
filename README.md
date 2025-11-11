@@ -22,7 +22,7 @@
 - Asistencia en consultas y otros trabajos en Python
 
 **Pablo Cardozo**
-- Organizacion del trello
+- Organización del trello
 - Consultas para los reportes
 - Ayuda en la creación del logo
 - Creación del menu de selección en Python
@@ -66,7 +66,7 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 5. Abrir la conexión
 6. Ir a File/Open SQL Script elegir dentro de la carpeta del proyecto el archivo `hotel.sql`.
 7. Encender la base de datos.
-8. Abrir cmd y ejecutar la sigueinte linea de código:
+8. Abrir cmd y ejecutar la siguiente línea de código:
 
    ```bash
    python -m pip install mysql-connector
