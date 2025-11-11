@@ -49,6 +49,12 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 * XAMPP.
 * MySQL Workbench 8.0 CE.
 
+### Contenido de `Proyecto.rar`
+
+* Contiene el archivo `hotel.sql`
+* Contiene el archivo `main.py`
+* Contiene la carpeta logo con el png `Logo Hotel.png`
+
 ---
 
 # Manual de instalación
