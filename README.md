@@ -53,7 +53,7 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 
 * Contiene el archivo `hotel.sql`
 * Contiene el archivo `main.py`
-* Contiene la carpeta logo con el png `Logo Hotel.png`
+* Contiene la carpeta `/logo` con el png `Logo Hotel.png`
 
 ---
 
