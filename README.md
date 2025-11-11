@@ -1,3 +1,3 @@
-# Archivos
+# Carpetas de Campo
 ## Descripción de Branch:
-En esta brach estarán a disposición todos los archivos relacionados con el trabajo que no sean arhivos `.py` o `.sql`
+En esta brach estarán a disposición todas las carpetas de campo. Cada carpeta estara en un archivo con su link de Google Docs
