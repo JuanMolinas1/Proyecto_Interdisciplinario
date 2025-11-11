@@ -22,7 +22,10 @@
 - Asistencia en consultas y otros trabajos en Python
 
 **Pablo Cardozo**
-- Participante del proyecto
+- Organizacion del trello
+- Consultas para los reportes
+- Ayuda en la creación del logo
+- Creación del menu de selección en Python
 
 ### Descripción
 
