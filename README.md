@@ -60,21 +60,15 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 # Manual de Usuario
 
 1. Descargar el archivo `Proyecto.rar`.
-
 2. Descomprimir el archivo en cualquier carpeta.
-
 3. Ejecutar XAMPP e iniciar los servicios Apache y MySQL.
-
 4. Abrir MySQL Workbench y crear una conexión con cualquier nombre.
-
-5. Ir a Data Import, seleccionar la opción "Import from self-contained file" y elegir dentro de la carpeta del proyecto el archivo `hotel.sql`.
-
-6. Encender la base de datos.
-
-7. Abrir el archivo de Python del proyecto e instalar la librería necesaria ejecutando en la terminal:
-
+5. Abrir la conexión
+6. Ir a File/Open SQL Script elegir dentro de la carpeta del proyecto el archivo `hotel.sql`.
+7. Encender la base de datos.
+8. Abrir cmd y ejecutar la sigueinte linea de código:
    ```bash
    python -m pip install mysql-connector
    ```
-
-8. Ejecutar el archivo de Python y comenzar a usar el programa.
+9. Abrir la carpeta de Proyecto con Visual Studio
+10. Ejecutar el archivo de Python y comenzar a usar el programa.
