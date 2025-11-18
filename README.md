@@ -25,11 +25,12 @@
 - Organización del trello
 - Consultas para los reportes
 - Ayuda en la creación del logo
-- Creación del menu de selección en Python
+- Creación del menú de selección en Python
 
 ### Descripción
 
 La base de datos del hotel está diseñada para almacenar y organizar la información de servicios, empleados, clientes y otros elementos clave del sistema.
+Este sistema está pensado para los recepcionistas, no para los clientes
 
 ### Características del proyecto
 
@@ -64,7 +65,7 @@ La base de datos del hotel está diseñada para almacenar y organizar la informa
 3. Ejecutar XAMPP e iniciar los servicios Apache y MySQL.
 4. Abrir MySQL Workbench y crear una conexión con cualquier nombre.
 5. Abrir la conexión
-6. Ir a File/Open SQL Script elegir dentro de la carpeta del proyecto el archivo `hotel.sql`.
+6. Ir a File/Open SQL Script y elegir dentro de la carpeta del proyecto el archivo `hotel.sql`.
 7. Encender la base de datos.
 8. Abrir cmd y ejecutar la siguiente línea de código:
 
