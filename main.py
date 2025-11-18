@@ -167,6 +167,9 @@ def Imprimir_Tabla(tabla, titulo):
     for fila in tabla:
         print(Formatear_Fila(fila))
 
+# Punto 2.1 Tabla Ordenada para Reservas Ordenadas
+def Mostrar_Tabla_Ordenada():
+    Imprimir_Tabla(Tabla_Reservas, "Tabla Reservas (Ordenadas por Fecha)")
 
 # Punto 2.2 Tabla Hash para Clientes frecuentes (>= 2 Reservas)
 def Mostrar_Hash():
@@ -233,7 +236,7 @@ def Insertar_Reserva():
         except ValueError:
             print("Ingrese la fecha correctamente (AAAA/M/D)\n\n")
 
-    sql = "INSERT INTO Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+    sql = "insert into Reservas (habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida) values (%s, %s, %s, %s, %s, %s, %s);"
     cursor.execute(sql,(habitacion, cliente, recepcionista, precio, cant_huespedes, fecha_entrada, fecha_salida))
     cnx.commit()
     print("Reserva insertada correctamente")
@@ -308,33 +311,36 @@ def main():
         try:
             menu = int(input("\n\n== Hoteles Connecticut =="
             "\nIngrese que desea hacer:"
-            "\n1. Crear Tabla Hash/Sin Hash"
-            "\n2. Crear Grafos"
-            "\n3. Crear Monticulo"
-            "\n4. Crear Reservas"
-            "\n5. Buscar Reservas"
-            "\n6. Crear Reporte Servicio"
-            "\n7. Crear Reporte Reserva"
+            "\n1. Crear Tabla Ordenada"
+            "\n2. Crear Tabla Hash/Sin Hash"
+            "\n3. Crear Grafos"
+            "\n4. Crear Monticulo"
+            "\n5. Crear Reservas"
+            "\n6. Buscar Reservas"
+            "\n7. Crear Reporte Servicio"
+            "\n8. Crear Reporte Reserva"
             "\n0. Cerrar Programa"
             "\n-> "))
             if menu == 1:
-                Mostrar_Hash()
+                Mostrar_Tabla_Ordenada()
             elif menu == 2:
-                Mostrar_Grafos()
+                Mostrar_Hash()
             elif menu == 3:
-                Mostrar_Monticulo()
+                Mostrar_Grafos()
             elif menu == 4:
-                Insertar_Reserva()
+                Mostrar_Monticulo()
             elif menu == 5:
-                Busqueda()
+                Insertar_Reserva()
             elif menu == 6:
+                Busqueda()
+            elif menu == 7:
                 while True:
                     try:
                         Generar_Reporte("Servicio_Mas_Demandado", Reporte_Servicio_Demandado)
                         break
                     except FileNotFoundError:
                         os.makedirs("archivos")
-            elif menu == 7:
+            elif menu == 8:
                 while True:
                     try:
                         Generar_Reporte("Ocupacion_Por_Temporada", Reporte_Ocupacion_Temporada)
